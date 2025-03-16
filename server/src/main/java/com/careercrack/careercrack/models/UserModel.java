@@ -21,20 +21,8 @@ import java.util.Date;
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
+    @Column(name = "id", unique = true, updatable = false)
     private Long id;
-
-    @Column(name = "username")
-    @NotNull
-    @Size(min = 3, max = 50)
-    private String username;
-
-    @Column(name = "hashed_password")
-    @NotNull
-    private String hashedPassword;
-
-    @Column(name = "Email")
-    private String email;
 
     @Column(name = "first_name")
     @NotNull
@@ -45,6 +33,18 @@ public class UserModel {
     @NotNull
     @Size(min = 1, max = 50)
     private String lastName;
+
+    @Column(name = "username")
+    @NotNull
+    @Size(min = 3, max = 50)
+    private String username;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "hashed_password")
+    @NotNull
+    private String hashedPassword;
 
     @Column(name = "created_at")
     @CreationTimestamp
