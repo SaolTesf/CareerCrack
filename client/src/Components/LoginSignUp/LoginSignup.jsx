@@ -1,8 +1,8 @@
 import React from 'react'
 import './LoginSignup.css'
 
-import { CiUser } from "react-icons/ci";
-import { RiLockPasswordLine } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
 
 
 export const LoginSignup = () => {
@@ -11,16 +11,21 @@ export const LoginSignup = () => {
       <div className='header'>
         <div className='text'>Signup</div>
         <div className='underline'></div>
-        <div className='form'>
-          <div className='input'>
-            <CiUser />
-            <input type='username/email' />
-          </div>
-          <div className='input'>
-            <RiLockPasswordLine />
-            <input type='password' />
-          </div>
+      </div>
+      <div className='form'>
+        <div className='input'>
+          <FaUser />
+          <input id='username-email' type='username/email' placeholder='username/email'/>
         </div>
+        <div className='input'>
+          <FaLock />
+          <input id='password' type='password' placeholder='password'/>
+        </div>
+      </div>
+      <div className="forgot-password">Forgot Password? <span>Click Here!</span></div>
+      <div className='submit-container'>
+        <div className='submit'>Sign Up</div>
+        <div className='submit'>Login</div>
       </div>
     </div>
   )

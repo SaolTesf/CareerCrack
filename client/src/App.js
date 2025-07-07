@@ -5,7 +5,9 @@ import { LoginSignup } from './Components/LoginSignUp/LoginSignup';
 function App() {
   return (
     <div>
-      <img src={logo} alt='CareerCrack logo' className='App-logo' />
+      <div className='logo-container'>
+        <img src={logo} alt='CareerCrack logo' className='App-logo' />
+      </div>
       <LoginSignup></LoginSignup>
     </div>
   );
