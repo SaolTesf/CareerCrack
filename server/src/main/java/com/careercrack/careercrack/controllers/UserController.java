@@ -2,6 +2,7 @@
 package com.careercrack.careercrack.controllers;
 
 import com.careercrack.careercrack.models.User;
+import com.careercrack.careercrack.services.JwtService;
 import com.careercrack.careercrack.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,11 @@ import java.util.Optional;
 @RequestMapping("api/users")
 public class UserController {
     private final UserService userService;
+    private final JwtService jwtService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JwtService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @GetMapping
