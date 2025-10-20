@@ -53,6 +53,12 @@ public class UserController {
         return ResponseEntity.ok(exists);
     }
 
+    @GetMapping("/username-check/{username}")
+    public ResponseEntity<Boolean> existByUsername(@PathVariable String username) {
+        Boolean exist = userService.existByUsername(username);
+        return ResponseEntity.ok(exist);
+    }
+
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User newUser = userService.createUser(user);
