@@ -39,6 +39,10 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
+    public Boolean existByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
     public User createUser(User user) {
         user.setHashedPassword(passwordEncoder.encode(user.getHashedPassword()));
         return userRepository.save(user);
