@@ -55,6 +55,7 @@ public class UserService {
             existingUser.setLastName(user.getLastName());
             existingUser.setUsername(user.getUsername());
             existingUser.setEmail(user.getEmail());
+            existingUser.setHashedPassword(passwordEncoder.encode(user.getHashedPassword()));
             existingUser.setUpdatedAt(new Date());
             return userRepository.save(existingUser);
         }
