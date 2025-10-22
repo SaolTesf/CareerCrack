@@ -26,6 +26,20 @@ public class AuthController {
         private String password;
     }
 
+    @Getter
+    @Setter
+    public static class AuthResponse {
+        private String token;
+        private String username;
+        private String email;
+
+        public AuthResponse(String token, User user) {
+            this.token = token;
+            this.username = user.getUsername();
+            this.email = user.getEmail();
+        }
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         User user = authService.login(loginRequest.getUserName(), loginRequest.getPassword());
