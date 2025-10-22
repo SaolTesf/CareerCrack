@@ -27,12 +27,12 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User findByUserName(String userName) {
-        return userRepository.findByUsername(userName);
+    public User findByUserName(String username) {
+        return userRepository.findByUsername(username);
     }
 
-    public User findByUserNameAndEmail(String userName, String email) {
-        return userRepository.findByUsernameAndEmail(userName, email);
+    public User findByUserNameAndEmail(String username, String email) {
+        return userRepository.findByUsernameAndEmail(username, email);
     }
 
     public Boolean existByEmail(String email) {

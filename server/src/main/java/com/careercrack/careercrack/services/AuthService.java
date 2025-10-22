@@ -15,8 +15,8 @@ public class AuthService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public User login(String userName, String password) {
-        User user = userRepository.getUserByUsername(userName);
+    public User login(String username, String password) {
+        User user = userRepository.getUserByUsername(username);
         if(user != null && bCryptPasswordEncoder.matches(password, user.getHashedPassword())) {
             return user;
         }
