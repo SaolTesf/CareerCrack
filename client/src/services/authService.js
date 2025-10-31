@@ -11,7 +11,7 @@ export const authService = {
   },
 
   async register(userData) {
-    const data = await apiClient.post('/auth/register', credentials);
+    const data = await apiClient.post('/auth/register', userData);
     if (data.token) {
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
@@ -26,7 +26,7 @@ export const authService = {
 
   getCurrentUser() {
     const user = localStorage.getItem('user')
-    return user ? JSON.stringify(user) : null;
+    return user ? JSON.parse(user) : null;
   },
 
   isAuthenticated() {
