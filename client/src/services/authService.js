@@ -9,6 +9,7 @@ export const authService = {
     }
     return data;
   },
+
   async register(userData) {
     const data = await apiClient.post('/auth/register', credentials);
     if (data.token) {
@@ -17,4 +18,19 @@ export const authService = {
     }
     return data;
   },
-}
+
+  logout () {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+  },
+
+  getCurrentUser() {
+    const user = localStorage.getItem('user')
+    return user ? JSON.stringify(user) : null;
+  },
+
+  isAuthenticated() {
+    return !!localStorage.getItem('authToken');
+  },
+
+};
