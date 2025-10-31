@@ -9,4 +9,12 @@ export const authService = {
     }
     return data;
   },
+  async register(userData) {
+    const data = await apiClient.post('/auth/register', credentials);
+    if (data.token) {
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+    }
+    return data;
+  },
 }
