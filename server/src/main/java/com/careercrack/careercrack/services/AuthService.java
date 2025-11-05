@@ -10,18 +10,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
     private final UserService userService;
 
-    public AuthService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService) {
+    public AuthService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, UserService userService) {
         this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.passwordEncoder = passwordEncoder;
         this.userService = userService;
     }
 
     public User login(String username, String password) {
         User user = userRepository.getUserByUsername(username);
-        if(user != null && bCryptPasswordEncoder.matches(password, user.getHashedPassword())) {
+        if(user != null && passwordEncoder.matches(password, user.getHashedPassword())) {
             return user;
         }
         return null;
@@ -40,6 +40,7 @@ public class AuthService {
         user.setLastName(request.getLastName());
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
+        user.setHashedPassword(passwordEncoder.encode(request.getPlainPassword()));
         return userService.createUser(user);
     }
 }
