@@ -34,6 +34,16 @@ public class AuthController {
 
     @Getter
     @Setter
+    public static class RegisterRequest {
+        private String firstName;
+        private String lastName;
+        private String username;
+        private String email;
+        private String plainPassword;
+    }
+
+    @Getter
+    @Setter
     public static class AuthResponse {
         private String token;
         private String username;
@@ -56,6 +66,14 @@ public class AuthController {
         }
         logger.warn("Failed login attempt for username: {}", loginRequest.getUsername());
         return ResponseEntity.status(401).body("invalid Credentials");
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        User user = authService.register(request); // throws an error that will be caught so no need for null check here
+        String token = jwtService.generateToken(user.getUsername());
+        logger.info("User {} created successfully. Initiating Login", user.getUsername());
+        return ResponseEntity.ok(new AuthResponse(token, user));
     }
 
 }
