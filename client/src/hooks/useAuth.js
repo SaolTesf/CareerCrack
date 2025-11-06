@@ -2,6 +2,23 @@ import { useState } from 'react';
 import { authService } from '../services/authService';
 
 export const useAuth = () => {
-  const [action, setAction] = useState("Sign Up");
-  const { login, register, loading, error } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const login = async (credentials) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await authService.login(credentials);
+      return data;
+    }
+    catch (error) {
+      setError(error.message);
+      throw error;
+    }
+    finally {
+      setLoading(false);
+    }
+  };
+
 };
