@@ -21,4 +21,20 @@ export const useAuth = () => {
     }
   };
 
+  const register = async (userData) => {
+    try{
+      setLoading(true);
+      setError(null);
+      const data = await authService.register(userData);
+      return data
+    }
+    catch (error) {
+      setError(error.message);
+      throw error;
+    }
+    finally {
+      setLoading(false);
+    }
+  };
+
 };
