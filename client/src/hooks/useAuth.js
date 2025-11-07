@@ -37,4 +37,7 @@ export const useAuth = () => {
     }
   };
 
+  const logout = () => {
+    authService.logout();
+  };
 };
