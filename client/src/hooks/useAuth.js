@@ -40,4 +40,14 @@ export const useAuth = () => {
   const logout = () => {
     authService.logout();
   };
+
+  return {
+    login,
+    register,
+    logout,
+    loading,
+    error,
+    isAuthenticated: authService.isAuthenticated(),
+    currentUser: authService.getCurrentUser(),
+  };
 };
