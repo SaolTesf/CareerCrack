@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import './LoginSignup.css';
 import { Login } from '../Login/Login';
 import { SignUp } from '../SignUp/SignUp';
+import { useAuth } from '../../hooks/useAuth';
 
 export const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
+  const { login, register, loading, error } = useAuth();
 
   return (
     <div className="container">
