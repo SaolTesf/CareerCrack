@@ -15,9 +15,21 @@ export const LoginSignup = () => {
       // add redirect logic after done
     }
     catch(error) {
-      console.log('Login failed: ', error);
+      console.error('Login failed: ', error);
     }
   }
+
+  const handleRegister = async (userData) => {
+    try {
+      await register(userData);
+      console.log('Register Successful');
+      // add redirect logic after done
+    }
+    catch(error) {
+      console.error('Registration failed: ', error);
+    }
+  }
+
   return (
     <div className="container">
       <div className="header">
