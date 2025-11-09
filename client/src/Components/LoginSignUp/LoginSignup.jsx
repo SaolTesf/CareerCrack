@@ -8,6 +8,16 @@ export const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
   const { login, register, loading, error } = useAuth();
 
+  const handleLogin = async (credentials) => {
+    try {
+      await login(credentials);
+      console.log('Login Successful');
+      // add redirect logic after done
+    }
+    catch(error) {
+      console.log('Login failed: ', error);
+    }
+  }
   return (
     <div className="container">
       <div className="header">
