@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaUser, FaLock } from "react-icons/fa";
 import { MdEmail } from 'react-icons/md';
 
-export const SignUp = () => {
+export const SignUp = ({onSubmit, loading}) => {
+  const [formData, setFormData] = useState({ email: '', password: '', username: '' })
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ( { ...prev, [name]: value }));
+  }
+
+  const handleSubmit = async(event) => {
+    event.preventDefault();
+    if (onSubmit) {
+      await onSubmit(formData);
+    }
+  }
+
   return (
-    <div className="form">
+    <form className="form" onSubmit={handleSubmit} noValidate>
       <div className="input">
         <MdEmail />
         <input 
           id="email"
           type="email"
           placeholder="email"
+          value={formData.email}
+          onChange={handleChange}
         />
       </div>
       <div className="input">
@@ -19,6 +35,8 @@ export const SignUp = () => {
           id="password"
           type="password"
           placeholder="password"
+          value={formData.password}
+          onChange={handleChange}
         />
       </div>
       <div className="input">
@@ -27,8 +45,13 @@ export const SignUp = () => {
           id="username"
           type="username"
           placeholder="username"
+          value={formData.username}
+          onChange={handleChange}
         />
       </div>
-    </div>
+      <div className='submit-container'>
+        <button type='submit'className="submit" disabled={loading}>Sign Up</button>
+      </div>
+    </form>
   )
 }
