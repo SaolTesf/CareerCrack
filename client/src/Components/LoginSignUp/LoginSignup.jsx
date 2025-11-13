@@ -37,7 +37,7 @@ export const LoginSignup = () => {
         <div className="underline" />
       </div>
 
-      {action === "Login" ? <Login /> : <SignUp />}
+      {error && <div className='error-message'>{error}</div>}
 
       {action === "Login" && (
         <div className="forgot-password">
