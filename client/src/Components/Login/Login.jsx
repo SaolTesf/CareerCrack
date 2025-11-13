@@ -43,7 +43,7 @@ export const Login = ({onSubmit, loading}) => {
           Forgot Password? <span>Click Here!</span>
       </div>
       <div className='submit-container'>
-        <button type='submit'className="submit">Log In</button>
+        <button type='submit'className="submit" disabled={loading}>Log In</button>
       </div>
     </form>
   )
