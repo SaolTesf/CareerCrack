@@ -36,23 +36,15 @@ export const LoginSignup = () => {
         <div className="text">{action}</div>
         <div className="underline" />
       </div>
-
+      
       {error && <div className='error-message'>{error}</div>}
 
-      {action === "Login" && (
-        <div className="forgot-password">
-          Forgot Password? <span>Click Here!</span>
-        </div>
-      )}
-
-      <div className="submit-container">
-        <div 
-          className={action === "Login" ? "submit gray" : "submit"} 
-          onClick={() => setAction("Sign Up")}>Sign Up</div>
-        <div 
-          className={action === "Sign Up" ? "submit gray" : "submit"} 
-          onClick={() => setAction("Login")}>Login</div>
-        </div>
+      {action === "Login" ? <Login onSubmit={handleLogin} /> : <SignUp onSubmit={handleRegister} />}
+      
+      <div className='auth-switch'>
+        {action === "Login" ? <div>Don't have an account? <span onClick={() => setAction("Sign Up")} disabled={loading}>Sign Up</span></div>
+        : <div>Have an account? <span onClick={() => setAction("Login")} disabled={loading}>Login</span></div>}
+      </div>
     </div>
   )
 }
