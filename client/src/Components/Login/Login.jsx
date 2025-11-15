@@ -23,7 +23,8 @@ export const Login = ({onSubmit, loading}) => {
         <FaUser />
         <input 
           id="username-email"
-          type="username/email"
+          name='identifier'
+          type="text"
           placeholder="username/email"
           value={formData.identifier}
           onChange={handleChange}
@@ -33,6 +34,7 @@ export const Login = ({onSubmit, loading}) => {
         <FaLock />
         <input 
           id="password"
+          name='password'
           type="password"
           placeholder="password"
           value={formData.password}
