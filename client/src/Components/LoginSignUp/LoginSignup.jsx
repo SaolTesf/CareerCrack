@@ -39,11 +39,21 @@ export const LoginSignup = () => {
       
       {error && <div className='error-message'>{error}</div>}
 
-      {action === "Login" ? <Login onSubmit={handleLogin} /> : <SignUp onSubmit={handleRegister} />}
+      {action === "Login" ? (
+        <Login onSubmit={handleLogin} />
+        )
+        : (
+        <SignUp onSubmit={handleRegister} />
+      )}
       
       <div className='auth-switch'>
-        {action === "Login" ? <div>Don't have an account? <span onClick={() => setAction("Sign Up")} disabled={loading}>Sign Up</span></div>
-        : <div>Have an account? <span onClick={() => setAction("Login")} disabled={loading}>Login</span></div>}
+        {action === "Login" ? (
+          <div>Don't have an account? <span onClick={() => setAction("Sign Up")} disabled={loading}>Sign Up</span></div>
+        )
+        : ( 
+        <div>Have an account? <span onClick={() => setAction("Login")} disabled={loading}>Login</span></div>
+        )}
+
       </div>
     </div>
   )
