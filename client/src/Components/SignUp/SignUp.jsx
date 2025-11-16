@@ -3,7 +3,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { MdEmail } from 'react-icons/md';
 
 export const SignUp = ({onSubmit, loading}) => {
-  const [formData, setFormData] = useState({ email: '', password: '', username: '' })
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', plainPassword: '', username: '' })
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -55,11 +55,11 @@ export const SignUp = ({onSubmit, loading}) => {
       <div className="input">
         <FaLock />
         <input 
-          id="password"
-          name='password'
+          id="plain-password"
+          name='plainPassword'
           type="password"
           placeholder="password"
-          value={formData.password}
+          value={formData.plainPassword}
           onChange={handleChange}
         />
       </div>
