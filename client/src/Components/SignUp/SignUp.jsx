@@ -22,6 +22,28 @@ export const SignUp = ({onSubmit, loading}) => {
       <div className="input">
         <MdEmail />
         <input 
+          id="first-name"
+          name='firstName'
+          type="text"
+          placeholder="first name"
+          value={formData.firstName}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="input">
+        <MdEmail />
+        <input 
+          id="last-name"
+          name='lastName'
+          type="text"
+          placeholder="last name"
+          value={formData.lastName}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="input">
+        <MdEmail />
+        <input 
           id="email"
           name='email'
           type="email"
