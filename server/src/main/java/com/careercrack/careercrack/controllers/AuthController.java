@@ -57,15 +57,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        User user = authService.login(loginRequest.getUsername(), loginRequest.getPassword());
-        if(user != null) {
-            String token = jwtService.generateToken(user.getUsername());
-            logger.info("User {} logged in successfully", loginRequest.getUsername());
-            return ResponseEntity.ok(new AuthResponse(token, user));
-        }
-        logger.warn("Failed login attempt for username: {}", loginRequest.getUsername());
-        return ResponseEntity.status(401).body("invalid Credentials");
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        User user = authService.login(request.getUsername(), request.getPassword());
+        String token = jwtService.generateToken(user.getUsername());
+        logger.info("User {} logged in successfully", request.getUsername());
+        return ResponseEntity.ok(new AuthResponse(token, user));
     }
 
     @PostMapping("/register")

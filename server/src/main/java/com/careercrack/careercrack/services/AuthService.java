@@ -1,6 +1,7 @@
 package com.careercrack.careercrack.services;
 
 import com.careercrack.careercrack.controllers.AuthController;
+import com.careercrack.careercrack.exceptions.InvalidCredentialsException;
 import com.careercrack.careercrack.models.User;
 import com.careercrack.careercrack.repositories.UserRepository;
 import com.careercrack.careercrack.exceptions.DuplicateResourceException;
@@ -21,8 +22,8 @@ public class AuthService {
 
     public User login(String username, String password) {
         User user = userRepository.getUserByUsername(username);
-        if(user != null && passwordEncoder.matches(password, user.getHashedPassword())) {
-            return user;
+        if(user == null || !passwordEncoder.matches(password, user.getHashedPassword())) {
+            throw new InvalidCredentialsException("Username/Email or password was incorrect");
         }
         return null;
     }
