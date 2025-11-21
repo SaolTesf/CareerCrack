@@ -1,5 +1,18 @@
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
+/*const readBody = async (response) => {
+  const raw = await response.text();
+  if (!raw) return null;
+  const isJson = response.headers.get()
+}
+  */
+
+// called when jwt token expires
+const resetSession = () => {
+  localStorage.clear();
+  // redirect to login page
+}
+
 export const apiClient = {
   async request(endpoint, options = {}) {
     const config = {
@@ -21,12 +34,14 @@ export const apiClient = {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong');
+        //resetSession();
+        throw new Error(data.error || 'Something went wrong');
       }
 
       return data;
     }
     catch (error) {
+      //resetSession();
       throw error;
     }
 
