@@ -13,19 +13,23 @@ public class AuthService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserService userService;
+    private final EmailService emailService;
 
-    public AuthService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, UserService userService) {
+    public AuthService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, UserService userService, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
+        this.emailService = emailService;
     }
 
-    public User login(String username, String password) {
-        User user = userRepository.getUserByUsername(username);
+    public User login(String identifier, String password) {
+        User user = emailService.isEmail(identifier)
+                ? userRepository.getUserByEmail(identifier)
+                : userRepository.getUserByUsername(identifier);
         if(user == null || !passwordEncoder.matches(password, user.getHashedPassword())) {
             throw new InvalidCredentialsException("Username/Email or password was incorrect");
         }
-        return null;
+        return user;
     }
 
     public User register(AuthController.RegisterRequest request) {
