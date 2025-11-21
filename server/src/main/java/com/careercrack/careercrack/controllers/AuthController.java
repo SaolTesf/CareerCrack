@@ -1,6 +1,8 @@
 package com.careercrack.careercrack.controllers;
 
 import com.careercrack.careercrack.services.JwtService;
+import com.careercrack.careercrack.services.AuthService;
+import com.careercrack.careercrack.models.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -10,8 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.careercrack.careercrack.services.AuthService;
-import com.careercrack.careercrack.models.User;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -28,7 +29,7 @@ public class AuthController {
     @Getter
     @Setter
     public static class LoginRequest {
-        private String username;
+        private String identifier;
         private String password;
     }
 
@@ -58,9 +59,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        User user = authService.login(request.getUsername(), request.getPassword());
+        User user = authService.login(request.getIdentifier(), request.getPassword());
         String token = jwtService.generateToken(user.getUsername());
-        logger.info("User {} logged in successfully", request.getUsername());
+        logger.info("User {} logged in successfully", request.getIdentifier());
         return ResponseEntity.ok(new AuthResponse(token, user));
     }
 
