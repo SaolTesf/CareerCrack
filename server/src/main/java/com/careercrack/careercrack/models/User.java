@@ -1,6 +1,7 @@
 package com.careercrack.careercrack.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,7 @@ public class User {
     private String username;
 
     @Column(name = "email")
+    @Email
     private String email;
 
     @Column(name = "hashed_password")
