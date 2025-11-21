@@ -44,7 +44,7 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        user.setHashedPassword(passwordEncoder.encode(user.getHashedPassword()));
+        user.setHashedPassword(user.getHashedPassword()); // hashing already happens in register service method
         return userRepository.save(user);
     }
 
