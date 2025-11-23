@@ -47,6 +47,7 @@ export const useAuth = () => {
     logout,
     loading,
     error,
+    clearError: () => setError(null),
     isAuthenticated: authService.isAuthenticated(),
     currentUser: authService.getCurrentUser(),
   };

@@ -6,7 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 
 export const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
-  const { login, register, loading, error } = useAuth();
+  const { login, register, loading, error, clearError } = useAuth();
 
   const handleLogin = async (credentials) => {
     try {
@@ -30,6 +30,12 @@ export const LoginSignup = () => {
     }
   }
 
+  const switchAction = (next) => {
+    if (action === next || loading) return; 
+    clearError();
+    setAction(next);
+  }
+
   return (
     <div className="container">
       <div className="header">
@@ -48,10 +54,10 @@ export const LoginSignup = () => {
       
       <div className='auth-switch'>
         {action === "Login" ? (
-          <div>Don't have an account? <span onClick={() => setAction("Sign Up")} disabled={loading}>Sign Up</span></div>
+          <div>Don't have an account? <span onClick={() => switchAction("Sign Up")} disabled={loading}>Sign Up</span></div>
         )
         : ( 
-        <div>Have an account? <span onClick={() => setAction("Login")} disabled={loading}>Login</span></div>
+        <div>Have an account? <span onClick={() => switchAction("Login")} disabled={loading}>Login</span></div>
         )}
 
       </div>
