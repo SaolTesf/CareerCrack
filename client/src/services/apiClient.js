@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL;
+const API_BASE_URL = import.meta.env.VITE_API_KEY;
 
 /*const readBody = async (response) => {
   const raw = await response.text();
@@ -15,18 +15,19 @@ const resetSession = () => {
 
 export const apiClient = {
   async request(endpoint, options = {}) {
+    const { skipAuth, ...rest } = options; // extract skipAuth from options and rest contains the remaining options
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        ...options.headers,        
+        ...rest.headers,        
       },
-      ...options,
+      ...rest,
 
     };
 
     // Add auth token if available
     const token = localStorage.getItem('authToken')
-    if (token) {
+    if (token && !skipAuth) {
       config.headers['Authorization'] = 'Bearer ' + token;
     }
     try {
@@ -47,26 +48,28 @@ export const apiClient = {
 
   },
 
-  get(endpoint) {
-    return this.request(endpoint, { method: 'GET'});
+  get(endpoint, options) {
+    return this.request(endpoint, { method: 'GET', ...options});
   },
 
-  post(endpoint, body) {
+  post(endpoint, body, options) {
     return this.request(endpoint, {
       method: 'POST',
       body: JSON.stringify(body),
+      ...options,
     });
   },
 
-  put(endpoint, body) {
+  put(endpoint, body, options) {
     return this.request(endpoint, {
       method: 'PUT',
       body: JSON.stringify(body),
+      ...options,
     });
   },
 
-  delete(endpoint) {
-    return this.request(endpoint, {method: 'DELETE'});
+  delete(endpoint, options) {
+    return this.request(endpoint, {method: 'DELETE', ...options});
   },
 
 };

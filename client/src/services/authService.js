@@ -2,7 +2,7 @@ import { apiClient } from './apiClient'
 
 export const authService = {
   async login(credentials) {
-    const data = await apiClient.post('/auth/login', credentials);
+    const data = await apiClient.post('/auth/login', credentials, { skipAuth: true });
     if (data.token) {
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
@@ -11,7 +11,7 @@ export const authService = {
   },
 
   async register(userData) {
-    const data = await apiClient.post('/auth/register', userData);
+    const data = await apiClient.post('/auth/register', userData, { skipAuth: true });
     if (data.token) {
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
