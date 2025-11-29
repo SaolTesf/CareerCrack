@@ -30,4 +30,53 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, []);
 
+    const login = async (credentials) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await authService.login(credentials);
+      return data;
+    }
+    catch (error) {
+      setError(error.message);
+      throw error;
+    }
+    finally {
+      setLoading(false);
+    }
+  };
+
+  const register = async (userData) => {
+    try{
+      setLoading(true);
+      setError(null);
+      const data = await authService.register(userData);
+      return data
+    }
+    catch (error) {
+      setError(error.message);
+      throw error;
+    }
+    finally {
+      setLoading(false);
+    }
+  };
+
+  const logout = () => {
+    authService.logout();
+  };
+
+  const value = {
+    login,
+    register,
+    logout,
+    loading,
+    error,
+    clearError: () => setError(null),
+    isAuthenticated: authService.isAuthenticated(),
+    currentUser: authService.getCurrentUser(),
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
 }
