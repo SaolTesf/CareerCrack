@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const initAuth = () => {
       try {
-        const currentUser = authService.getCurrentUser;
+        const currentUser = authService.getCurrentUser();
         const isAuthenticated = authService.isAuthenticated();
 
         if(isAuthenticated && currentUser) {
@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       setError(null);
       const data = await authService.login(credentials);
+      setUser(data.user);
       return data;
     }
     catch (error) {
@@ -51,6 +52,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       setError(null);
       const data = await authService.register(userData);
+      setUser(data.user);
       return data
     }
     catch (error) {
@@ -64,17 +66,18 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     authService.logout();
+    setUser(null);
   };
 
   const value = {
+    user,
+    loading,
+    error,
     login,
     register,
     logout,
-    loading,
-    error,
     clearError: () => setError(null),
-    isAuthenticated: authService.isAuthenticated(),
-    currentUser: authService.getCurrentUser(),
+    isAuthenticated: !!user,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
