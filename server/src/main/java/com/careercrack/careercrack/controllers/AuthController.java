@@ -47,13 +47,29 @@ public class AuthController {
     @Setter
     public static class AuthResponse {
         private String token;
-        private String username;
-        private String email;
+        private UserData user;
+
+        // create new class to return only some user data in Auth Response
+        @Getter
+        @Setter
+        public static class UserData {
+            private String firstName;
+            private String lastName;
+            private String username;
+            private String email;
+
+
+            public UserData(User user) {
+                this.firstName = user.getFirstName();
+                this.lastName = user.getLastName();
+                this.username = user.getUsername();
+                this.email = user.getEmail();
+            }
+        }
 
         public AuthResponse(String token, User user) {
             this.token = token;
-            this.username = user.getUsername();
-            this.email = user.getEmail();
+            this.user = new UserData(user);
         }
     }
 
