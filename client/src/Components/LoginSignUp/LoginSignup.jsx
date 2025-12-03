@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LoginSignup.css';
 import { Login } from '../Login/Login';
 import { SignUp } from '../SignUp/SignUp';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 
 export const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
-  const { login, register, loading, error, clearError } = useAuth();
+  const { login, register, loading, error, clearError, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  // will navigate automatically when the user is authenticated
+  useEffect(() => {
+    if(isAuthenticated) {
+      navigate('/home', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleLogin = async (credentials) => {
     try {
       await login(credentials);
       console.log('Login Successful');
-      // add redirect logic after done
     }
     catch(error) {
       console.error('Login failed: ', error);
@@ -23,7 +31,6 @@ export const LoginSignup = () => {
     try {
       await register(userData);
       console.log('Register Successful');
-      // add redirect logic after done
     }
     catch(error) {
       console.error('Registration failed: ', error);
@@ -46,10 +53,9 @@ export const LoginSignup = () => {
       {error && <div className='error-message'>{error}</div>}
 
       {action === "Login" ? (
-        <Login onSubmit={handleLogin} />
-        )
-        : (
-        <SignUp onSubmit={handleRegister} />
+        <Login onSubmit={handleLogin} loading={loading} />
+        ) : (
+        <SignUp onSubmit={handleRegister} loading={loading} />
       )}
       
       <div className='auth-switch'>
