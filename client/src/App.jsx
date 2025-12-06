@@ -21,6 +21,14 @@ function App() {
             }
           />
           <Route path='/' element={<Navigate to="/home" replace />} />
+          <Route
+            path='/problems'
+            element={
+              <ProtectedRoute>
+                <div>Put Problem Component Here</div>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
