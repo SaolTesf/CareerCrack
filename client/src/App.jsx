@@ -29,6 +29,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route 
+            path='/applications'
+            element={
+              <ProtectedRoute>
+                <div>Put Application Component Here</div>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
