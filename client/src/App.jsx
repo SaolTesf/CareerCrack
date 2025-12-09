@@ -2,14 +2,16 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import logo from './Components/Assets/CareerCrack-logo.png';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { LoginSignup } from './Components/LoginSignUp/LoginSignup';
+import { useAuth } from './context/AuthContext';
 import { Home } from './Components/Home/Home';
 import { AuthProvider } from './context/AuthContext';
 import { Navbar } from './components/NavBar/Navbar';
 function App() {
+  const { isAuthenticated } = useAuth();
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Navbar/>
+        {isAuthenticated && location.pathname !== '/login' && <Navbar />}
         <Routes>
           <Route path='/login' element={<LoginSignup />} />
           <Route 
