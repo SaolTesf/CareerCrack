@@ -1,45 +1,55 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import logo from './Components/Assets/CareerCrack-logo.png';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { LoginSignup } from './Components/LoginSignUp/LoginSignup';
-import { useAuth } from './context/AuthContext';
 import { Home } from './Components/Home/Home';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/NavBar/Navbar';
-function App() {
+
+function AppRouter() {
+  const location = useLocation();
   const { isAuthenticated } = useAuth();
+  const showNavbar = isAuthenticated && location.pathname !== '/login';
+  return (
+    <>
+      {showNavbar && <Navbar />}
+      <Routes>
+        <Route path='/login' element={<LoginSignup />} />
+        <Route 
+          path='/home'
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route path='/' element={<Navigate to="/home" replace />} />
+        <Route
+          path='/problems'
+          element={
+            <ProtectedRoute>
+              <div>Put Problem Component Here</div>
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path='/applications'
+          element={
+            <ProtectedRoute>
+              <div>Put Application Component Here</div>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </>
+  );
+}
+
+function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        {isAuthenticated && location.pathname !== '/login' && <Navbar />}
-        <Routes>
-          <Route path='/login' element={<LoginSignup />} />
-          <Route 
-            path='/home'
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route path='/' element={<Navigate to="/home" replace />} />
-          <Route
-            path='/problems'
-            element={
-              <ProtectedRoute>
-                <div>Put Problem Component Here</div>
-              </ProtectedRoute>
-            }
-          />
-          <Route 
-            path='/applications'
-            element={
-              <ProtectedRoute>
-                <div>Put Application Component Here</div>
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+        <AppRouter />
       </AuthProvider>
     </BrowserRouter>
   );
