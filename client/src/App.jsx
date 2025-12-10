@@ -13,34 +13,36 @@ function AppRouter() {
   return (
     <>
       {showNavbar && <Navbar />}
-      <Routes>
-        <Route path='/login' element={<LoginSignup />} />
-        <Route 
-          path='/home'
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route path='/' element={<Navigate to="/home" replace />} />
-        <Route
-          path='/problems'
-          element={
-            <ProtectedRoute>
-              <div>Put Problem Component Here</div>
-            </ProtectedRoute>
-          }
-        />
-        <Route 
-          path='/applications'
-          element={
-            <ProtectedRoute>
-              <div>Put Application Component Here</div>
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+      <div className={showNavbar ? 'main-content' : ''}>
+        <Routes>
+          <Route path='/login' element={<LoginSignup />} />
+          <Route 
+            path='/home'
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route path='/' element={<Navigate to="/home" replace />} />
+          <Route
+            path='/problems'
+            element={
+              <ProtectedRoute>
+                <div>Put Problem Component Here</div>
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path='/applications'
+            element={
+              <ProtectedRoute>
+                <div>Put Application Component Here</div>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </div>
     </>
   );
 }
