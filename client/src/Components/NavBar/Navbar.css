@@ -36,6 +36,17 @@
 }
 
 .main-content {
-  margin-left: 250px;
+  margin-left: 10px;
+  margin-top: 10px;
   min-height: 100vh;
+}
+
+.main-content-navbar {
+  margin-left: 280px;
+  margin-top: 10px;
+  min-height: 100vh;
+}
+
+.selected {
+  background: rgba(255, 255, 255, 0.1);
 }
