@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaHome, FaBriefcase, FaClipboardList, FaCog } from "react-icons/fa";
 import logo from './../Assets/CareerCrack-logo530.png'
@@ -16,8 +16,6 @@ export const Navbar = () => {
   
   const location = useLocation();
   let selectedTab = location.pathname;
-  /*let navbarStyle = 'minimize';
-  let navbarMode = 'nohover';*/
   let navbarImage = navbarStyle + '-' + (isHovered ? 'hover' : 'nohover');
   const navModetoPng = new Map([
     ['open-nohover', open],
@@ -58,10 +56,11 @@ export const Navbar = () => {
           </button>
         </div>
         <div className='logo-name'>
-          <img src={logo} alt='CareerCrack Logo' height={"48px"}/>
+          <img src={logo} alt='CareerCrack Logo' height={"30px"}/>
           CareerCrack
         </div>
       </div>
+      <hr class="line-seperator"></hr>
       <div className='links'>
         <Link to={"/home"} className={selectedTab==="/home" ? "selected": ''}>
           <FaHome />
