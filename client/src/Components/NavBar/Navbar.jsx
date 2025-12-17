@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaBriefcase, FaClipboardList, FaCog } from "react-icons/fa";
+import { FaHome, FaBriefcase, FaClipboardList, FaCog, FaSearch } from "react-icons/fa";
 import logo from './../Assets/CareerCrack-logo530.png'
 import open from './../Assets/ui/open.png';
 import minimze from './../Assets/ui/minimize.png';
@@ -58,6 +58,10 @@ export const Navbar = () => {
         <div className='logo-name'>
           <img src={logo} alt='CareerCrack Logo' height={"30px"}/>
           CareerCrack
+        </div>
+        <div className='search'>
+          <FaSearch />
+          <input type="text" placeholder="Search" />
         </div>
       </div>
       <hr class="line-seperator"></hr>
