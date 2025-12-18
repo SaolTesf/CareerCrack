@@ -64,7 +64,7 @@ export const Navbar = () => {
           <input type="text" placeholder="Search" />
         </div>
       </div>
-      <hr class="line-seperator"></hr>
+      <hr className="line-seperator"></hr>
       <div className='links'>
         <Link to={"/home"} className={selectedTab==="/home" ? "selected": ''}>
           <FaHome />
