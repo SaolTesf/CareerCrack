@@ -41,6 +41,15 @@ function AppRouter() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path='/settings'
+            element={
+              <ProtectedRoute>
+                <div>Put Settings Component Here</div>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </>
