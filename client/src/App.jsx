@@ -12,8 +12,8 @@ function AppRouter() {
   const showNavbar = isAuthenticated && location.pathname !== '/login';
   return (
     <>
-      {showNavbar && <Navbar />}
-      <div className={showNavbar ? 'main-content' : ''}>
+      <div className={showNavbar ? 'main-content-navbar' : 'main-content'}>
+        { showNavbar && <Navbar /> }
         <Routes>
           <Route path='/login' element={<LoginSignup />} />
           <Route 
