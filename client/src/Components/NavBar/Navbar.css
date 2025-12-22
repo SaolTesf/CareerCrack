@@ -13,6 +13,10 @@
   overflow-y: auto;
 }
 
+.navbar.minimized {
+  width: 80px;
+}
+
 .navHeader {
   display: flex;
   flex-direction: column;
