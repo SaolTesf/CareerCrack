@@ -17,6 +17,12 @@
   width: 80px;
 }
 
+.navbar.minimized .logo-name span,
+.navbar.minimized .links span,
+.navbar.minimized .search {
+  display: none;
+}
+
 .navHeader {
   display: flex;
   flex-direction: column;
