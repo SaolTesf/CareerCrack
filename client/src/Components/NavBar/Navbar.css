@@ -23,6 +23,11 @@
   display: none;
 }
 
+.navbar.minimized .logo-name {
+  justify-content: center;
+  padding: 2.5rem 0 0 0;
+}
+
 .navHeader {
   display: flex;
   flex-direction: column;
