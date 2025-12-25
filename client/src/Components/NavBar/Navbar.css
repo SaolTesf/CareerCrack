@@ -28,6 +28,11 @@
   padding: 2.5rem 0 0 0;
 }
 
+.navbar.minimized .links a {
+  justify-content: center;
+  padding: 1rem;
+}
+
 .navHeader {
   display: flex;
   flex-direction: column;
