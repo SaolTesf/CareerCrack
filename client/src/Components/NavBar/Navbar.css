@@ -33,6 +33,11 @@
   padding: 1rem;
 }
 
+.navbar.minimized .nav-control {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .navHeader {
   display: flex;
   flex-direction: column;
