@@ -10,13 +10,14 @@ import minimzeHover from './../Assets/ui/minimize-hover.png';
 import closeHover from './../Assets/ui/close-hover.png';
 import './Navbar.css';
 
-export const Navbar = () => {
-  const [navbarStyle, setNavBarStyle] = useState('minimize');
+export const Navbar = ({ isMinimized, setIsMinimized }) => {
   const [isHovered, setIsHovered] = useState(false);
   
   const location = useLocation();
   let selectedTab = location.pathname;
-  let navbarImage = navbarStyle + '-' + (isHovered ? 'hover' : 'nohover');
+
+  let navbarImage = (isMinimized ? 'open' : 'minimize') + '-' + (isHovered ? 'hover' : 'nohover');
+
   const navModetoPng = new Map([
     ['open-nohover', open],
     ['minimize-nohover', minimze],
@@ -35,54 +36,52 @@ export const Navbar = () => {
   }
 
   const handleNavbarToggle = () => {
-    if(navbarStyle === 'minimize') {
-      setNavBarStyle('open');
-    }
-    else if(navbarStyle === 'open') {
-      setNavBarStyle('minimize');
-    }
+    setIsMinimized(!isMinimized);
   }
 
   return (
-    <nav className='navbar'>
+    <nav className={'navbar ' + (isMinimized ? 'minimized' : '')}>
       <div className='navHeader'>
         <div className='nav-control'>
           <button 
           onMouseEnter={handleMouseEnter} 
           onMouseLeave={handleMouseLeave}
           onClick={handleNavbarToggle}
+          aria-controls={isMinimized ? "Expand navbar" : "Minimized navbar"}
           >
-            <img src={navModetoPng.get(navbarImage)} />
+            <img src={navModetoPng.get(navbarImage)} alt='navbar control' />
           </button>
         </div>
         <div className='logo-name'>
-          <img src={logo} alt='CareerCrack Logo' height={"30px"}/>
-          CareerCrack
+          <img src={logo} alt='CareerCrack Logo' height="30px"/>
+          {!isMinimized && <span>CareerCrack</span>}
         </div>
-        <div className='search'>
-          <FaSearch />
-          <input type="text" placeholder="Search" />
-        </div>
+        {!isMinimized && (
+          <div className='search'>
+            <FaSearch />
+            <input type="text" placeholder="Search" />
+          </div>
+        )}
       </div>
-      <hr className="line-seperator"></hr>
+      <hr className="line-seperator" />
       <div className='links'>
-        <Link to={"/home"} className={selectedTab==="/home" ? "selected": ''}>
+        <Link to="/home" className={selectedTab === "/home" ? "selected" : ''}>
           <FaHome />
-          <span>Home</span>
+          {!isMinimized && <span>Home</span>}
         </Link>
-        <Link to={"/problems"} className={selectedTab==="/problems" ? "selected": ''}>
+        <Link to="/problems" className={selectedTab === "/problems" ? "selected" : ''}>
           <FaClipboardList />
-          <span>Problems</span>
+          {!isMinimized && <span>Problems</span>}
         </Link>
-        <Link to={"/applications"} className={selectedTab==="/applications" ? "selected": ''}>
+        <Link to="/applications" className={selectedTab === "/applications" ? "selected" : ''}>
           <FaBriefcase />
-          <span>Applications</span>
+          {!isMinimized && <span>Applications</span>}
         </Link>
-        <Link to={"/settings"} className={selectedTab==="/settings" ? "selected": ''}>
+        <Link to="/settings" className={selectedTab === "/settings" ? "selected" : ''}>
           <FaCog />
-          <span>Settings</span>
+          {!isMinimized && <span>Settings</span>}
         </Link>
       </div>
     </nav>
-  )
-}
+  );
+};

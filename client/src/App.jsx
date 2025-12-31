@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import logo from './Components/Assets/CareerCrack-logo.png';
 import { ProtectedRoute } from './routes/ProtectedRoute';
@@ -10,10 +12,19 @@ function AppRouter() {
   const location = useLocation();
   const { isAuthenticated } = useAuth();
   const showNavbar = isAuthenticated && location.pathname !== '/login';
+  //const showNavbar = false;
+
+  const [isNavbarMinimized, setIsNavbarMinimized] = useState(false);
+
   return (
     <>
-      <div className={showNavbar ? 'main-content-navbar' : 'main-content'}>
-        { showNavbar && <Navbar /> }
+      <div className={(showNavbar ? 'main-content-navbar ' : 'main-content ') + (isNavbarMinimized ? 'minimized' : '')}>
+        { showNavbar && (
+          <Navbar 
+            isMinimized={isNavbarMinimized}
+            setIsMinimized={setIsNavbarMinimized}
+          />
+        )}
         <Routes>
           <Route path='/login' element={<LoginSignup />} />
           <Route 
