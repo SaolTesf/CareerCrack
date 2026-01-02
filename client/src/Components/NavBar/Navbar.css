@@ -111,10 +111,6 @@
   margin-left: 110px;
 }
 
-.main-content-navbar.minimized {
-  margin-left: 0.3s ease;
-}
-
 .selected {
   background: rgba(0, 0, 0, 0.1);
 }
