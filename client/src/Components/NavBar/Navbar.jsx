@@ -56,12 +56,10 @@ export const Navbar = ({ isMinimized, setIsMinimized }) => {
           <img src={logo} alt='CareerCrack Logo' height="30px"/>
           {!isMinimized && <span>CareerCrack</span>}
         </div>
-        {!isMinimized && (
-          <div className='search'>
-            <FaSearch />
-            <input type="text" placeholder="Search" />
-          </div>
-        )}
+        <div className='search'>
+          <FaSearch />
+          <input type="text" onClick={isMinimized && handleNavbarToggle} placeholder="Search" />
+        </div>
       </div>
       <hr className="line-seperator" />
       <div className='links'>

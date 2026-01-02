@@ -18,8 +18,7 @@
 }
 
 .navbar.minimized .logo-name span,
-.navbar.minimized .links span,
-.navbar.minimized .search {
+.navbar.minimized .links span{
   display: none;
 }
 
