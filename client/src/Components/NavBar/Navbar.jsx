@@ -61,7 +61,7 @@ export const Navbar = ({ isMinimized, setIsMinimized }) => {
           <input type="text" onClick={() => isMinimized && handleNavbarToggle()} placeholder="Search" />
         </div>
       </div>
-      <hr className="line-seperator" />
+      <hr className="line-separator" />
       <div className='links'>
         <Link to="/home" className={selectedTab === "/home" ? "selected" : ''}>
           <FaHome />
