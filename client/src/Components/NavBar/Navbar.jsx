@@ -58,7 +58,7 @@ export const Navbar = ({ isMinimized, setIsMinimized }) => {
         </div>
         <div className='search'>
           <FaSearch />
-          <input type="text" onClick={isMinimized && handleNavbarToggle} placeholder="Search" />
+          <input type="text" onClick={() => isMinimized && handleNavbarToggle()} placeholder="Search" />
         </div>
       </div>
       <hr className="line-seperator" />
