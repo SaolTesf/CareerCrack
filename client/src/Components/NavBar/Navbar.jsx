@@ -3,10 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { FaHome, FaBriefcase, FaClipboardList, FaCog, FaSearch } from "react-icons/fa";
 import logo from './../Assets/CareerCrack-logo530.png'
 import open from './../Assets/ui/open.png';
-import minimze from './../Assets/ui/minimize.png';
+import minimize from './../Assets/ui/minimize.png';
 import close from './../Assets/ui/close.png';
 import openHover from './../Assets/ui/open-hover.png';
-import minimzeHover from './../Assets/ui/minimize-hover.png';
+import minimizeHover from './../Assets/ui/minimize-hover.png';
 import closeHover from './../Assets/ui/close-hover.png';
 import './Navbar.css';
 
@@ -20,10 +20,10 @@ export const Navbar = ({ isMinimized, setIsMinimized }) => {
 
   const navModetoPng = new Map([
     ['open-nohover', open],
-    ['minimize-nohover', minimze],
+    ['minimize-nohover', minimize],
     ['close-nohover', close],
     ['open-hover', openHover],
-    ['minimize-hover', minimzeHover],
+    ['minimize-hover', minimizeHover],
     ['close-hover', closeHover]
   ])
 
