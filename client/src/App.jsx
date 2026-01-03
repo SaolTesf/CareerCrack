@@ -6,7 +6,7 @@ import { ProtectedRoute } from './routes/ProtectedRoute';
 import { LoginSignup } from './Components/LoginSignUp/LoginSignup';
 import { Home } from './Components/Home/Home';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { Navbar } from './components/NavBar/Navbar';
+import { Navbar } from './Components/Navbar/Navbar';
 
 function AppRouter() {
   const location = useLocation();
