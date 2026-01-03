@@ -12,7 +12,6 @@ function AppRouter() {
   const location = useLocation();
   const { isAuthenticated } = useAuth();
   const showNavbar = isAuthenticated && location.pathname !== '/login';
-  //const showNavbar = false;
 
   const [isNavbarMinimized, setIsNavbarMinimized] = useState(false);
 
