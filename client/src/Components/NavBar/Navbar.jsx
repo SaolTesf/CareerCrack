@@ -40,14 +40,14 @@ export const Navbar = ({ isMinimized, setIsMinimized }) => {
   }
 
   return (
-    <nav className={'navbar ' + (isMinimized ? 'minimized' : '')}>
+    <nav id='main-navbar' className={'navbar ' + (isMinimized ? 'minimized' : '')}>
       <div className='navHeader'>
         <div className='nav-control'>
           <button 
           onMouseEnter={handleMouseEnter} 
           onMouseLeave={handleMouseLeave}
           onClick={handleNavbarToggle}
-          aria-controls={isMinimized ? "Expand navbar" : "Minimized navbar"}
+          aria-controls="main-navbar"
           >
             <img src={navModetoPng.get(navbarImage)} alt='navbar control' />
           </button>
