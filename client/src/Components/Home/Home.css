@@ -1,0 +1,12 @@
+.floating-container {
+  background-color: #f7f7f7;
+  margin-left: -280px;
+  padding-left: 280px;
+  transition: margin-left 0.3s ease, padding-left 0.3s ease;
+}
+
+/* When navbar is minimized */
+.main-content-navbar.minimized .floating-container {
+  margin-left: -110px;
+  padding-left: 110px;
+}
