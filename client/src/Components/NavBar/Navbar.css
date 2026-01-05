@@ -100,15 +100,15 @@
 }
 
 .main-content-navbar {
-  margin-left: 280px;
+  padding-left: 280px;
   margin-top: 10px;
   min-height: 100vh;
   overflow-y: auto;
-  transition: margin-left 0.3s ease;
+  transition: padding-left 0.3s ease;
 }
 
 .main-content-navbar.minimized {
-  margin-left: 110px;
+  padding-left: 110px;
 }
 
 .selected {
