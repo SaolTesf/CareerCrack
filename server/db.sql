@@ -3,6 +3,7 @@
 create database careercrack
     with owner career_user;
 
+--users table
 create sequence user_info.users_new_id_seq
     as integer;
 
