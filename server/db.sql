@@ -3,6 +3,10 @@
 create database careercrack
     with owner career_user;
 
+CREATE SCHEMA IF NOT EXISTS careercrack AUTHORIZATION career_user;
+
+/*
+
 --users table
 create sequence user_info.users_new_id_seq
     as integer;
@@ -32,3 +36,5 @@ alter table users
     owner to career_user;
 
 alter sequence users_new_id_seq owned by users.id;
+
+ */
