@@ -28,3 +28,8 @@ CREATE TABLE problems_categories (
     name VARCHAR(50) NOT NULl UNIQUE,
     description TEXT
 );
+
+INSERT INTO problems_categories (name, description) VALUES
+('LeetCode', 'Data structures and algorithms problems'),
+('Behavioral', 'Behavioral interview questions'),
+('System Design', 'System design interview prep');
