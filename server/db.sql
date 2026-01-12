@@ -21,3 +21,10 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- problems section
+CREATE TABLE problems_categories (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULl UNIQUE,
+    description TEXT
+);
