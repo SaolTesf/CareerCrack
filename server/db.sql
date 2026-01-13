@@ -33,3 +33,31 @@ INSERT INTO problems_categories (name, description) VALUES
 ('LeetCode', 'Data structures and algorithms problems'),
 ('Behavioral', 'Behavioral interview questions'),
 ('System Design', 'System design interview prep');
+
+CREATE TABLE problems (
+    id BIGSERIAL PRIMARY KEY,
+
+    user_id BIGSERIAL NOT NULL,
+    category_id BIGSERIAL NOT NULL,
+
+    title VARCHAR(255) NOT NULL,
+    external_link TEXT,
+    difficulty VARCHAR(5),
+    status VARCHAR(20),
+
+    description TEXT,
+    solution TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_problem_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT  fk_problem_category
+        FOREIGN KEY (category_id)
+        REFERENCES problems_categories(id)
+        ON DELETE CASCADE
+);
