@@ -18,7 +18,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users", schema = "user_info")
+@Table(name = "users", schema = "careercrack")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
