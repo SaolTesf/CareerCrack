@@ -61,3 +61,8 @@ CREATE TABLE problems (
         REFERENCES problems_categories(id)
         ON DELETE CASCADE
 );
+
+-- allows quick querying on these columns
+CREATE INDEX idx_problems_user_id ON problems(user_id);
+CREATE INDEX idx_problems_category_id ON problems(category_id);
+CREATE INDEX idx_problems_status ON problems(status);
