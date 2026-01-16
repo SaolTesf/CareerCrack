@@ -66,3 +66,20 @@ CREATE TABLE problems (
 CREATE INDEX idx_problems_user_id ON problems(user_id);
 CREATE INDEX idx_problems_category_id ON problems(category_id);
 CREATE INDEX idx_problems_status ON problems(status);
+
+CREATE TABLE problem_resources (
+    id BIGSERIAL PRIMARY KEY,
+
+    problem_id BIGINT NOT NULL,
+    resource_type VARCHAR(50),
+    url TEXT NOT NULL,
+    description TEXT,
+
+    CONSTRAINT fk_resource_problem
+        FOREIGN KEY (problem_id)
+        REFERENCES problems(id)
+        ON DELETE CASCADE
+);
+
+
+
