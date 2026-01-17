@@ -23,7 +23,7 @@ CREATE TABLE users (
 );
 
 -- problems section
-CREATE TABLE problems_categories (
+CREATE TABLE problem_categories (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULl UNIQUE,
     description TEXT
