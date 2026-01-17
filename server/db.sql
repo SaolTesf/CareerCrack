@@ -29,7 +29,7 @@ CREATE TABLE problem_categories (
     description TEXT
 );
 
-INSERT INTO problems_categories (name, description) VALUES
+INSERT INTO problem_categories (name, description) VALUES
 ('LeetCode', 'Data structures and algorithms problems'),
 ('Behavioral', 'Behavioral interview questions'),
 ('System Design', 'System design interview prep');
@@ -58,13 +58,13 @@ CREATE TABLE problems (
 
     CONSTRAINT  fk_problem_category
         FOREIGN KEY (category_id)
-        REFERENCES problems_categories(id)
+        REFERENCES problem_categories(id)
         ON DELETE CASCADE
 );
 
 -- allows quick querying on these columns
 CREATE INDEX idx_problems_user_id ON problems(user_id);
-CREATE INDEX idx_problems_category_id ON problems(category_id);
+CREATE INDEX idx_problem_category_id ON problems(category_id);
 CREATE INDEX idx_problems_status ON problems(status);
 
 CREATE TABLE problem_resources (
