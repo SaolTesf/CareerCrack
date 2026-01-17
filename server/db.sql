@@ -86,3 +86,19 @@ CREATE TABLE tags (
     name VARCHAR(50) NOT NULL UNIQUE
 );
 
+CREATE TABLE problem_tags (
+    problem_id BIGSERIAL,
+    tag_id BIGSERIAL,
+
+    PRIMARY KEY(problem_id, tag_id),
+
+    CONSTRAINT fk_pt_problem
+        FOREIGN KEY  (problem_id)
+        REFERENCES problems(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_pt_tag
+        FOREIGN KEY (tag_id)
+        REFERENCES tags(id)
+        ON DELETE CASCADE
+)
