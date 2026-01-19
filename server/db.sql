@@ -43,6 +43,8 @@ CREATE TABLE problems (
     title VARCHAR(255) NOT NULL,
     external_link TEXT,
     difficulty VARCHAR(5),
+
+    -- TODO, ATTEMPTED, SOLVED, REVIEW, MASTERED
     status VARCHAR(20),
 
     description TEXT,
