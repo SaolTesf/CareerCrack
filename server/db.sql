@@ -47,7 +47,7 @@ CREATE TABLE problems (
     difficulty VARCHAR(10),
 
     -- TODO, ATTEMPTED, SOLVED, REVIEW, MASTERED
-    status VARCHAR(20),
+    status VARCHAR(20) NOT NULL,
 
     description TEXT,
     solution TEXT,
