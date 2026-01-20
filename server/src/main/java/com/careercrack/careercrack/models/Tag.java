@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 
 @Entity
-public class Tags {
+public class Tag {
     @Id
     @Column(name = "id", unique = true, updatable = false)
     private Long id;

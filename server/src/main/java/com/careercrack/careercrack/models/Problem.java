@@ -18,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "problems", schema = "careercrack")
-public class Problems {
+public class Problem {
 
     public enum Status {
         TODO,

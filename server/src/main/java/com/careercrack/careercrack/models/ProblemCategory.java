@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "problem_categories", schema = "careercrack")
-public class ProblemCategories {
+public class ProblemCategory {
 
     @Id
     @Column(name = "id", unique = true, updatable = false)

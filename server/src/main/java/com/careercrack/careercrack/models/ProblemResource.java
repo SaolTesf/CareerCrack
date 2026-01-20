@@ -10,7 +10,7 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "problem_resources", schema = "careercrack")
-public class ProblemResources {
+public class ProblemResource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, updatable = false)
