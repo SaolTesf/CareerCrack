@@ -5,7 +5,25 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class ProblemTagId implements Serializable { // will be serialized and sent across the network
+    @Column(name = "problem_id", unique = true, updatable = false)
+    private Long problemId;
+
+    @Column(name = "tag_id", unique = true, updatable = false)
+    private Long tagId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProblemTagId that)) return false;
+        return Objects.equals(problemId, that.problemId) && Objects.equals(tagId, that.tagId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(problemId, tagId);
+    }
 }
