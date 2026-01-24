@@ -24,4 +24,9 @@ public class ProblemTag {
     @JoinColumn(name = "problem_id", nullable = false)
     private Problem problem;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("tagId")
+    @JoinColumn(name = "tag_id", nullable = false)
+    private Tag tag;
+
 }
