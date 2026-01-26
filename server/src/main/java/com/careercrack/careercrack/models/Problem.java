@@ -10,7 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -66,9 +66,9 @@ public class Problem {
 
     @Column(name = "created_at")
     @CreationTimestamp
-    private Date created_at;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     @UpdateTimestamp
-    private Date updated_at;
+    private LocalDateTime updatedAt;
 }
