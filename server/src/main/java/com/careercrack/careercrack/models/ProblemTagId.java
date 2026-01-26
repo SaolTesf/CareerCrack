@@ -9,10 +9,10 @@ import java.util.Objects;
 
 @Embeddable
 public class ProblemTagId implements Serializable { // will be serialized and sent across the network
-    @Column(name = "problem_id", unique = true, updatable = false)
+    @Column(name = "problem_id", updatable = false)
     private Long problemId;
 
-    @Column(name = "tag_id", unique = true, updatable = false)
+    @Column(name = "tag_id", updatable = false)
     private Long tagId;
 
     @Override
