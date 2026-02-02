@@ -6,5 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ProblemTagRepository extends JpaRepository<ProblemTagRepository, ProblemTagId> {
+public interface ProblemTagRepository extends JpaRepository<ProblemTag, ProblemTagId> {
+    Boolean existByProblem_IdAndTag_Id(Long problemId, Long tagId);
+
+    void deleteByProblem_Id(Long problemId);
 }
