@@ -36,4 +36,8 @@ public class ProblemService {
         }
         return null;
     }
+
+    public void deleteProblem(Long id) {
+        problemRepository.deleteById(id);
+    }
 }
