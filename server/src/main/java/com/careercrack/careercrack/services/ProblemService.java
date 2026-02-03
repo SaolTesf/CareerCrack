@@ -22,4 +22,18 @@ public class ProblemService {
     public Optional<Problem> findById(Long id) {
         return problemRepository.findById(id);
     }
+
+    public Problem updateProblem(Long id, Problem problem) {
+        Problem existingProblem = findById(id).orElse(null);
+        if(existingProblem != null) {
+            existingProblem.setTitle(problem.getTitle());
+            existingProblem.setExternalLink(problem.getExternalLink());
+            existingProblem.setDifficulty(problem.getDifficulty());
+            existingProblem.setStatus(problem.getStatus());
+            existingProblem.setDescription(problem.getDescription());
+            existingProblem.setSolution(problem.getSolution());
+            return existingProblem;
+        }
+        return null;
+    }
 }
