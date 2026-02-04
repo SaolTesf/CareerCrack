@@ -2,9 +2,10 @@ package com.careercrack.careercrack.services;
 
 import com.careercrack.careercrack.repositories.ProblemRepository;
 import com.careercrack.careercrack.models.Problem;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 @Service
@@ -15,8 +16,8 @@ public class ProblemService {
         this.problemRepository = problemRepository;
     }
 
-    public List<Problem> getAllProblems() {
-        return problemRepository.findAll();
+    public Page<Problem> getAllProblems(Pageable pageable) {
+        return problemRepository.findAll(pageable);
     }
 
     public Optional<Problem> findById(Long id) {
