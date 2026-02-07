@@ -37,4 +37,8 @@ public class ProblemController {
         return problemService.findById(id);
     }
 
+    @PutMapping("/{id}")
+    public Problem updateProblem(@PathVariable Long id, @Valid @RequestBody Problem problem) {
+        return problemService.updateProblem(id, problem);
+    }
 }
