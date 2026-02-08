@@ -41,4 +41,9 @@ public class ProblemController {
     public Problem updateProblem(@PathVariable Long id, @Valid @RequestBody Problem problem) {
         return problemService.updateProblem(id, problem);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteProblem(@PathVariable Long id) {
+        problemService.deleteProblem(id);
+    }
 }
