@@ -3,6 +3,7 @@ package com.careercrack.careercrack.controllers;
 import com.careercrack.careercrack.models.Problem;
 import com.careercrack.careercrack.services.ProblemService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/problems")
 public class ProblemController {
@@ -30,12 +32,14 @@ public class ProblemController {
             @RequestParam(defaultValue = "true") boolean ascending) {
         Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
+        log.info("Retrieving {} problems for page {}, sorting by {} and ascending {}", size, page, sortBy, ascending);
         return ResponseEntity.ok(problemService.getAllProblems(pageable));
     }
 
     @GetMapping("/{id}")
-    public Optional<Problem> getProblemById(@PathVariable Long id) {
-        return problemService.findById(id);
+    public ResponseEntity<Problem> getProblemById(@PathVariable Long id) {
+        Optional<Problem> problem = problemService.findById(id);
+        return problem.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
