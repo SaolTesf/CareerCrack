@@ -43,8 +43,9 @@ public class ProblemController {
     }
 
     @PutMapping("/{id}")
-    public Problem updateProblem(@PathVariable Long id, @Valid @RequestBody Problem problem) {
-        return problemService.updateProblem(id, problem);
+    public ResponseEntity<Problem> updateProblem(@PathVariable Long id, @Valid @RequestBody Problem problem) {
+        Problem updatedProblem = problemService.updateProblem(id, problem);
+        return (updatedProblem != null) ? ResponseEntity.ok(updatedProblem) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
