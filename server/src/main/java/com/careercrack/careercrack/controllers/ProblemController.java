@@ -25,7 +25,7 @@ public class ProblemController {
 
     // Source: https://www.geeksforgeeks.org/advance-java/pagination-and-sorting-with-spring-data-jpa/
     @GetMapping
-    public ResponseEntity<Page<Problem>> getAllProducts(
+    public ResponseEntity<Page<Problem>> getAllProblems(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "id") String sortBy,
