@@ -24,7 +24,7 @@ public class ProblemService {
         return problemRepository.findById(id);
     }
 
-    public Problem createUser(Problem problem) {
+    public Problem createProblem(Problem problem) {
         return problemRepository.save(problem);
     }
 
