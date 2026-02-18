@@ -25,7 +25,7 @@ public class ProblemCategoryController {
 
     @GetMapping()
     public ResponseEntity<Page<Problem>> getAllProblems(
-            @RequestParam(required = true) String categoryName,
+            @RequestParam String categoryName,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size,
             @RequestParam(defaultValue = "id") String sortBy,
