@@ -24,6 +24,10 @@ public class ProblemService {
         return problemRepository.findById(id);
     }
 
+    public Problem createUser(Problem problem) {
+        return problemRepository.save(problem);
+    }
+
     public Problem updateProblem(Long id, Problem problem) {
         Problem existingProblem = findById(id).orElse(null);
         if(existingProblem != null) {
