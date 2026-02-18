@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,12 @@ public class ProblemController {
     public ResponseEntity<Problem> getProblemById(@PathVariable Long id) {
         Optional<Problem> problem = problemService.findById(id);
         return problem.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<Problem> createProblem(@Valid @RequestBody Problem problem) {
+        Problem newProblem = problemService.createProblem(problem);
+        return new ResponseEntity<>(newProblem, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
