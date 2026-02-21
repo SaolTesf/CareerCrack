@@ -18,7 +18,7 @@ public class ProblemResource {
     private Long id;
 
     @Column(name = "problem_id")
-    @NonNull
+    @NotNull
     private Long problemId;
 
     @Column(name = "resource_type")
