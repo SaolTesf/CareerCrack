@@ -16,7 +16,4 @@ public class ProblemResourceService {
         return problemResourceRepository.save(problemResource);
     }
 
-    public ProblemResource getProblemResourceByProblemId(Long problemId) {
-        return problemResourceRepository.getProblemResourceByProblemId(problemId);
-    }
 }
