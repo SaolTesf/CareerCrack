@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
