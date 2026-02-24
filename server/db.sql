@@ -66,6 +66,14 @@ CREATE TABLE problems (
         ON DELETE CASCADE
 );
 
+INSERT INTO careercrack.problems (user_id, category_id, title, external_link, difficulty, status, description, solution) VALUES
+(1, 1, 'Two Sum', 'https://leetcode.com/problems/two-sum/', 'easy', 'SOLVED', 'Given an array of integers, return indices of the two numbers that add up to a target.', 'Use hash map for O(n) solution'),
+(1, 1, 'Merge Two Sorted Lists', 'https://leetcode.com/problems/merge-two-sorted-lists/', 'easy', 'REVIEW', 'Merge two sorted linked lists.', 'Use two pointers'),
+(1, 2, 'Tell me about yourself', NULL, 'medium', 'TODO', 'Common behavioral question', NULL),
+(1, 3, 'Design a URL Shortener', NULL, 'hard', 'ATTEMPTED', 'Design a scalable URL shortening service', 'Use base62 encoding and distributed cache'),
+(1, 1, 'Valid Parentheses', 'https://leetcode.com/problems/valid-parentheses/', 'easy', 'MASTERED', 'Check if parentheses are balanced', 'Use stack data structure');
+
+
 -- allows quick querying on these columns
 CREATE INDEX idx_problems_user_id ON problems(user_id);
 CREATE INDEX idx_problem_category_id ON problems(category_id);
