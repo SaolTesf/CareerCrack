@@ -106,6 +106,25 @@ CREATE TABLE tags (
     name VARCHAR(50) NOT NULL UNIQUE
 );
 
+INSERT INTO careercrack.tags (name) VALUES
+    ('Array'),
+    ('String'),
+    ('Hash Table'),
+    ('Dynamic Programming'),
+    ('Math'),
+    ('Sorting'),
+    ('Greedy'),
+    ('Depth-First Search'),
+    ('Binary Search'),
+    ('Tree'),
+    ('Graph'),
+    ('Backtracking'),
+    ('Stack'),
+    ('Queue'),
+    ('Linked List'),
+    ('Two Pointers'),
+    ('Sliding Window');
+
 CREATE TABLE problem_tags (
     problem_id BIGSERIAL,
     tag_id BIGSERIAL,
