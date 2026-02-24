@@ -93,6 +93,14 @@ CREATE TABLE problem_resources (
         ON DELETE CASCADE
 );
 
+-- Sample data for problem_resources
+INSERT INTO careercrack.problem_resources (problem_id, resource_type, url, description) VALUES
+    (1, 'video', 'https://youtube.com/example1', 'NeetCode solution explanation'),
+    (1, 'article', 'https://medium.com/example1', 'Alternative approach'),
+    (4, 'video', 'https://youtube.com/example2', 'System design walkthrough'),
+    (5, 'article', 'https://leetcode.com/discuss/example', 'Official solution');
+
+
 CREATE TABLE tags (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE
