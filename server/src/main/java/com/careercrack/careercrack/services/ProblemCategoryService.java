@@ -15,6 +15,6 @@ public class ProblemCategoryService {
     }
 
     public Page<Problem> getAllProblems(String name, Pageable pageable) {
-        return problemCategoryRepository.getAllProblemsByName(name, pageable);
+        return problemCategoryRepository.findAllProblemsByName(name, pageable);
     }
 }

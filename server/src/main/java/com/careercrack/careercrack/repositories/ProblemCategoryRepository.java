@@ -12,5 +12,5 @@ import org.springframework.data.repository.query.Param;
 public interface ProblemCategoryRepository extends JpaRepository<ProblemCategory, Long> {
 
     @Query("SELECT p FROM Problem p JOIN ProblemCategory pc on p.categoryId = pc.id WHERE pc.name = :name")
-    Page<Problem> getAllProblemsByName(@Param("name") String name, Pageable pageable);
+    Page<Problem> findAllProblemsByName(@Param("name") String name, Pageable pageable);
 }
