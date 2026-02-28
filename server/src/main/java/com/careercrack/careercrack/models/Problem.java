@@ -34,9 +34,10 @@ public class Problem {
     @Column(name = "id", unique = true, updatable = false)
     private Long id;
 
-    @Column(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     @NotNull
-    private Long userId;
+    private User user;
 
     @Column(name = "category_id")
     @NotNull
@@ -77,4 +78,5 @@ public class Problem {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "problem_id")
     private List<ProblemResource> problemResources;
+
 }
