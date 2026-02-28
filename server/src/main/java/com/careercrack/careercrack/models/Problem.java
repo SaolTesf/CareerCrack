@@ -39,9 +39,10 @@ public class Problem {
     @NotNull
     private User user;
 
-    @Column(name = "category_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     @NotNull
-    private Long categoryId;
+    private ProblemCategory problemCategory;
 
     @Column(name = "title")
     @NotNull
