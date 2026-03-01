@@ -15,7 +15,4 @@ public interface ProblemTagRepository extends JpaRepository<ProblemTag, ProblemT
     Boolean existsByProblem_IdAndTag_Id(Long problemId, Long tagId);
 
     void deleteByProblem_Id(Long problemId);
-
-    @Query("SELECT p FROM Problem p JOIN ProblemTag pt WHERE pt.tag.id = :tagId")
-    Page<Problem> findAllProblemsById(@Param("tagId") Long id, Pageable pageable);
 }

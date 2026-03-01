@@ -34,11 +34,13 @@ public class Problem {
     @Column(name = "id", unique = true, updatable = false)
     private Long id;
 
+    // A User can have many Problems
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @NotNull
     private User user;
 
+    // A Category can have many Problems
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     @NotNull
@@ -74,6 +76,16 @@ public class Problem {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    // Many Problems can have many Tags
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "problem_tags",
+            schema = "careercrack",
+            joinColumns = @JoinColumn(name = "problem_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags;
 
     // One problem can have many resources
     @OneToMany(fetch = FetchType.LAZY)
