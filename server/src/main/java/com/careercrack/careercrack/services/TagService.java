@@ -18,4 +18,13 @@ public class TagService {
         return tagRepository.findAll();
     }
 
+    public Tag getOrCreate(String name) {
+        return tagRepository.findByNameIgnoreCase(name
+        ).orElseGet(() -> {
+            Tag tag = new Tag();
+            tag.setName(name.toLowerCase());
+            return tagRepository.save(tag);
+        });
+    }
+
 }
