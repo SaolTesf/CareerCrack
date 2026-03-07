@@ -18,7 +18,7 @@ public class TagService {
         return tagRepository.findAll();
     }
 
-    public Tag getOrCreate(String name) {
+    public Tag findOrCreate(String name) {
         return tagRepository.findByNameIgnoreCase(name
         ).orElseGet(() -> {
             Tag tag = new Tag();
