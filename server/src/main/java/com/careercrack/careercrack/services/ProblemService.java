@@ -47,7 +47,7 @@ public class ProblemService {
         newProblem.setDifficulty(createProblemRequest.getDifficulty());
         newProblem.setStatus(Problem.Status.valueOf(createProblemRequest.getStatus())); // Status attribute expects the Status enum type
         newProblem.setDescription(createProblemRequest.getDescription());
-        newProblem.setSolution(createProblemRequest.getDescription());
+        newProblem.setSolution(createProblemRequest.getSolution());
 
         // save problem so ID can be created
         Problem savedProblem = problemRepository.save(newProblem);
