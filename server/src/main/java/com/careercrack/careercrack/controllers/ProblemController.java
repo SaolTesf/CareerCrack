@@ -1,5 +1,6 @@
 package com.careercrack.careercrack.controllers;
 
+import com.careercrack.careercrack.dtos.CreateProblemRequest;
 import com.careercrack.careercrack.models.Problem;
 import com.careercrack.careercrack.services.ProblemService;
 import jakarta.validation.Valid;
@@ -44,8 +45,8 @@ public class ProblemController {
     }
 
     @PostMapping
-    public ResponseEntity<Problem> createProblem(@Valid @RequestBody Problem problem) {
-        Problem newProblem = problemService.createProblem(problem);
+    public ResponseEntity<Problem> createProblem(@Valid @RequestBody CreateProblemRequest createProblemRequest) {
+        Problem newProblem = problemService.createProblem(createProblemRequest);
         return new ResponseEntity<>(newProblem, HttpStatus.CREATED);
     }
 
