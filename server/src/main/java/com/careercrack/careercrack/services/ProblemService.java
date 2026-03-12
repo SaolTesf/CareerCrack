@@ -5,6 +5,7 @@ import com.careercrack.careercrack.dtos.CreateProblemRequest;
 import com.careercrack.careercrack.models.Tag;
 import com.careercrack.careercrack.repositories.ProblemRepository;
 import com.careercrack.careercrack.models.Problem;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,7 @@ public class ProblemService {
         return problemRepository.findById(id);
     }
 
+    @Transactional
     public Problem createProblem(CreateProblemRequest createProblemRequest) {
         // create and set all attributes of problem
         Problem newProblem = new Problem();
