@@ -51,9 +51,10 @@ public class ProblemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Problem> updateProblem(@PathVariable Long id, @Valid @RequestBody Problem problem) {
-        Problem updatedProblem = problemService.updateProblem(id, problem);
-        return (updatedProblem != null) ? ResponseEntity.ok(updatedProblem) : ResponseEntity.notFound().build();
+    public ResponseEntity<Problem> updateProblem(@PathVariable Long id, @Valid @RequestBody UpdateProblemRequest updateProblemRequest) {
+        Problem updatedProblem = problemService.updateProblem(id, updateProblemRequest);
+        log.info("Updated Problem with ID {}", updatedProblem.getId());
+        return ResponseEntity.ok(updatedProblem);
     }
 
     @DeleteMapping("/{id}")

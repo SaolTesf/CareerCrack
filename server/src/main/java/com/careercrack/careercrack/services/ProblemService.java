@@ -70,8 +70,8 @@ public class ProblemService {
     }
 
     @Transactional
-    public Problem updateProblem(UpdateProblemRequest updateProblemRequest) {
-        Problem existingProblem = findById(updateProblemRequest.getId()).orElseThrow(() -> new IllegalArgumentException("Problem not found"));
+    public Problem updateProblem(Long id, UpdateProblemRequest updateProblemRequest) {
+        Problem existingProblem = findById(id).orElseThrow(() -> new IllegalArgumentException("Problem not found"));
 
         if(updateProblemRequest.getTitle() != null) {
             existingProblem.setTitle(updateProblemRequest.getTitle());

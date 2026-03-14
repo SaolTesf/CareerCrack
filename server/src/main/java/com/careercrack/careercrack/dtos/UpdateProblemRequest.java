@@ -15,9 +15,6 @@ import java.util.List;
 @Setter
 public class UpdateProblemRequest {
 
-    @NotNull
-    private Long id;
-
     @Size(min = 5, max = 255)
     private String title;
 
