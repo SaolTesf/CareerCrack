@@ -2,10 +2,11 @@ package com.careercrack.careercrack.services;
 
 
 import com.careercrack.careercrack.dtos.CreateProblemRequest;
+import com.careercrack.careercrack.dtos.UpdateProblemRequest;
 import com.careercrack.careercrack.models.Tag;
 import com.careercrack.careercrack.repositories.ProblemRepository;
 import com.careercrack.careercrack.models.Problem;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +55,6 @@ public class ProblemService {
         // save problem so ID can be created
         Problem savedProblem = problemRepository.save(newProblem);
 
-
         // either add or create tags (need the tag names in string format) if provided
         if(createProblemRequest.getTags() != null && !createProblemRequest.getTags().isEmpty()) {
             Set<Tag> problemTags = new HashSet<>();
@@ -69,18 +69,39 @@ public class ProblemService {
         return savedProblem;
     }
 
-    public Problem updateProblem(Long id, Problem problem) {
-        Problem existingProblem = findById(id).orElse(null);
-        if(existingProblem != null) {
-            existingProblem.setTitle(problem.getTitle());
-            existingProblem.setExternalLink(problem.getExternalLink());
-            existingProblem.setDifficulty(problem.getDifficulty());
-            existingProblem.setStatus(problem.getStatus());
-            existingProblem.setDescription(problem.getDescription());
-            existingProblem.setSolution(problem.getSolution());
-            return existingProblem;
+    @Transactional
+    public Problem updateProblem(UpdateProblemRequest updateProblemRequest) {
+        Problem existingProblem = findById(updateProblemRequest.getId()).orElseThrow(() -> new IllegalArgumentException("Problem not found"));
+
+        if(updateProblemRequest.getTitle() != null) {
+            existingProblem.setTitle(updateProblemRequest.getTitle());
         }
-        return null;
+        if(updateProblemRequest.getExternalLink() != null) {
+            existingProblem.setExternalLink(updateProblemRequest.getExternalLink());
+        }
+        if(updateProblemRequest.getDifficulty() != null) {
+            existingProblem.setDifficulty(updateProblemRequest.getDifficulty());
+        }
+        if(updateProblemRequest.getStatus() != null) {
+            existingProblem.setStatus(Problem.Status.valueOf(updateProblemRequest.getStatus()));
+        }
+        if(updateProblemRequest.getDescription() != null) {
+            existingProblem.setDescription(updateProblemRequest.getDescription());
+        }
+        if(updateProblemRequest.getSolution() != null) {
+            existingProblem.setSolution(updateProblemRequest.getSolution());
+        }
+
+        if(updateProblemRequest.getTags() != null && !updateProblemRequest.getTags().isEmpty()) {
+            Set<Tag> updatedTag = new HashSet<>(existingProblem.getTags());
+            for(String tag : updateProblemRequest.getTags()) {
+                Tag newTag = tagService.findOrCreate(tag);
+                updatedTag.add(newTag);
+            }
+            existingProblem.setTags(new ArrayList<>(updatedTag));
+        }
+
+        return problemRepository.save(existingProblem);
     }
 
     public void deleteProblem(Long id) {
