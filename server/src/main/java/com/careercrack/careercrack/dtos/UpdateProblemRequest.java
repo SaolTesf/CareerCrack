@@ -1,5 +1,6 @@
 package com.careercrack.careercrack.dtos;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,9 @@ import java.util.List;
 @Getter
 @Setter
 public class UpdateProblemRequest {
+
+    @NotNull
+    private Long id;
 
     @Size(min = 5, max = 255)
     private String title;
