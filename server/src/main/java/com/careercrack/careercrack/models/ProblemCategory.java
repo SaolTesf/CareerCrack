@@ -1,6 +1,7 @@
 package com.careercrack.careercrack.models;
 
 
+import com.careercrack.careercrack.enums.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,7 +26,7 @@ public class ProblemCategory {
     @Column(name = "name", unique = true)
     @NotNull
     @Size(min = 1, max = 50)
-    private String name;
+    private Category name;
 
     @Column(name = "description")
     private String description;
