@@ -73,6 +73,10 @@ public class ProblemService {
     public Problem updateProblem(Long id, UpdateProblemRequest updateProblemRequest) {
         Problem existingProblem = findById(id).orElseThrow(() -> new IllegalArgumentException("Problem not found"));
 
+        if(updateProblemRequest.getCategory() != null) {
+            existingProblem.setProblemCategory(problemCategoryService.findByName(updateProblemRequest.getCategory()).orElseThrow(() -> new IllegalArgumentException("Problem Category not found")));
+        }
+
         if(updateProblemRequest.getTitle() != null) {
             existingProblem.setTitle(updateProblemRequest.getTitle());
         }
@@ -104,7 +108,11 @@ public class ProblemService {
         return problemRepository.save(existingProblem);
     }
 
-    public void deleteProblem(Long id) {
+    public boolean deleteProblem(Long id) {
+        if(!problemRepository.existsById(id)) {
+            return false;
+        }
         problemRepository.deleteById(id);
+        return true;
     }
 }

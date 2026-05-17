@@ -1,5 +1,6 @@
 package com.careercrack.careercrack.services;
 
+import com.careercrack.careercrack.enums.Category;
 import com.careercrack.careercrack.models.Problem;
 import com.careercrack.careercrack.models.ProblemCategory;
 import com.careercrack.careercrack.repositories.ProblemCategoryRepository;
@@ -23,5 +24,9 @@ public class ProblemCategoryService {
 
     public Optional<ProblemCategory> findById(Long id) {
         return problemCategoryRepository.findById(id);
+    }
+
+    public Optional<ProblemCategory> findByName(Category name) {
+        return problemCategoryRepository.findProblemCategoryByName(name);
     }
 }

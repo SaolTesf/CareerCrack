@@ -1,6 +1,7 @@
 package com.careercrack.careercrack.controllers;
 
 import com.careercrack.careercrack.dtos.CreateProblemRequest;
+import com.careercrack.careercrack.dtos.UpdateProblemRequest;
 import com.careercrack.careercrack.models.Problem;
 import com.careercrack.careercrack.services.ProblemService;
 import jakarta.validation.Valid;
@@ -58,7 +59,15 @@ public class ProblemController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProblem(@PathVariable Long id) {
-        problemService.deleteProblem(id);
+    public ResponseEntity<Void> deleteProblem(@PathVariable Long id) {
+        boolean deleted = problemService.deleteProblem(id);
+        if(deleted) {
+            log.info("Deleted Problem with ID {}", id);
+            return ResponseEntity.noContent().build();
+        }
+        else {
+            log.error("Failed to delete Problem with ID {}", id);
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
