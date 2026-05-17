@@ -42,12 +42,14 @@ public class ProblemController {
     @GetMapping("/{id}")
     public ResponseEntity<Problem> getProblemById(@PathVariable Long id) {
         Optional<Problem> problem = problemService.findById(id);
+        log.info("Retrieving problem with id {}", id);
         return problem.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<Problem> createProblem(@Valid @RequestBody CreateProblemRequest createProblemRequest) {
         Problem newProblem = problemService.createProblem(createProblemRequest);
+        log.info("Created problem with id {}", newProblem.getId());
         return new ResponseEntity<>(newProblem, HttpStatus.CREATED);
     }
 
