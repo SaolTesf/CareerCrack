@@ -1,5 +1,6 @@
 package com.careercrack.careercrack.models;
 
+import com.careercrack.careercrack.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,15 +21,6 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "problems", schema = "careercrack")
 public class Problem {
-
-    public enum Status {
-        TODO,
-        ATTEMPTED,
-        SOLVED,
-        REVIEW,
-        MASTERED
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, updatable = false)
