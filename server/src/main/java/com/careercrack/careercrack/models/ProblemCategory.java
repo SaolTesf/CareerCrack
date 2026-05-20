@@ -23,6 +23,7 @@ public class ProblemCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "name", unique = true)
     @NotNull
     @Size(min = 1, max = 50)

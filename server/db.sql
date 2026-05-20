@@ -30,9 +30,9 @@ CREATE TABLE careercrack.problem_categories (
 );
 
 INSERT INTO careercrack.problem_categories (name, description) VALUES
-    ('LeetCode', 'Data structures and algorithms problems'),
-    ('Behavioral', 'Behavioral interview questions'),
-    ('System Design', 'System design interview prep');
+    ('LEETCODE', 'Data structures and algorithms problems'),
+    ('BEHAVIORAL', 'Behavioral interview questions'),
+    ('SYSTEM_DESIGN', 'System design interview prep');
 
 CREATE TABLE careercrack.problems (
     id BIGSERIAL PRIMARY KEY,
