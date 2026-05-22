@@ -2,7 +2,9 @@ package com.careercrack.careercrack.services;
 
 
 import com.careercrack.careercrack.dtos.CreateProblemRequest;
+import com.careercrack.careercrack.dtos.ProblemResponse;
 import com.careercrack.careercrack.dtos.UpdateProblemRequest;
+import com.careercrack.careercrack.enums.Status;
 import com.careercrack.careercrack.models.Tag;
 import com.careercrack.careercrack.repositories.ProblemRepository;
 import com.careercrack.careercrack.models.Problem;
@@ -31,16 +33,22 @@ public class ProblemService {
         this.problemCategoryService = problemCategoryService;
     }
 
-    public Page<Problem> getAllProblems(Pageable pageable) {
-        return problemRepository.findAll(pageable);
+    public Page<ProblemResponse> getAllProblems(Pageable pageable) {
+        Page<Problem> problems = problemRepository.findAll(pageable);
+        return problems.map(this::mapToDto);
     }
 
-    public Optional<Problem> findById(Long id) {
-        return problemRepository.findById(id);
+    public Page<ProblemResponse> getAllProblemsByUserId(Long userId, Pageable pageable) {
+        Page<Problem> problems = problemRepository.findAllByUserId(userId, pageable);
+        return problems.map(this::mapToDto);
+    }
+
+    public Optional<ProblemResponse> findById(Long id) {
+        return problemRepository.findById(id).map(this::mapToDto);
     }
 
     @Transactional
-    public Problem createProblem(CreateProblemRequest createProblemRequest) {
+    public ProblemResponse createProblem(CreateProblemRequest createProblemRequest) {
         // create and set all attributes of problem
         Problem newProblem = new Problem();
         newProblem.setUser(userService.findById(createProblemRequest.getUserId()).orElseThrow(() -> new IllegalArgumentException("User not found")));
@@ -48,7 +56,7 @@ public class ProblemService {
         newProblem.setTitle(createProblemRequest.getTitle());
         newProblem.setExternalLink(createProblemRequest.getExternalLink());
         newProblem.setDifficulty(createProblemRequest.getDifficulty());
-        newProblem.setStatus(Problem.Status.valueOf(createProblemRequest.getStatus())); // Status attribute expects the Status enum type
+        newProblem.setStatus(Status.valueOf(createProblemRequest.getStatus())); // Status attribute expects the Status enum type
         newProblem.setDescription(createProblemRequest.getDescription());
         newProblem.setSolution(createProblemRequest.getSolution());
 
@@ -66,12 +74,12 @@ public class ProblemService {
             savedProblem = problemRepository.save(savedProblem);
         }
 
-        return savedProblem;
+        return mapToDto(savedProblem);
     }
 
     @Transactional
-    public Problem updateProblem(Long id, UpdateProblemRequest updateProblemRequest) {
-        Problem existingProblem = findById(id).orElseThrow(() -> new IllegalArgumentException("Problem not found"));
+    public ProblemResponse updateProblem(Long id, UpdateProblemRequest updateProblemRequest) {
+        Problem existingProblem = problemRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Problem not found"));
 
         if(updateProblemRequest.getCategory() != null) {
             existingProblem.setProblemCategory(problemCategoryService.findByName(updateProblemRequest.getCategory()).orElseThrow(() -> new IllegalArgumentException("Problem Category not found")));
@@ -87,7 +95,7 @@ public class ProblemService {
             existingProblem.setDifficulty(updateProblemRequest.getDifficulty());
         }
         if(updateProblemRequest.getStatus() != null) {
-            existingProblem.setStatus(Problem.Status.valueOf(updateProblemRequest.getStatus()));
+            existingProblem.setStatus(Status.valueOf(updateProblemRequest.getStatus()));
         }
         if(updateProblemRequest.getDescription() != null) {
             existingProblem.setDescription(updateProblemRequest.getDescription());
@@ -105,7 +113,8 @@ public class ProblemService {
             existingProblem.setTags(new ArrayList<>(updatedTag));
         }
 
-        return problemRepository.save(existingProblem);
+        Problem savedProblem = problemRepository.save(existingProblem);
+        return mapToDto(savedProblem);
     }
 
     public boolean deleteProblem(Long id) {
@@ -114,5 +123,22 @@ public class ProblemService {
         }
         problemRepository.deleteById(id);
         return true;
+    }
+
+    public ProblemResponse mapToDto(Problem problem) {
+        return new ProblemResponse(
+                problem.getId(),
+                problem.getUser().getId(),
+                problem.getProblemCategory().getName().toString(),
+                problem.getTitle(),
+                problem.getExternalLink(),
+                problem.getDifficulty(),
+                problem.getStatus().toString(),
+                problem.getDescription(),
+                problem.getSolution(),
+                problem.getCreatedAt(),
+                problem.getUpdatedAt(),
+                (problem.getTags() != null ? problem.getTags().stream().map(Tag::getName).toList() : new ArrayList<>())
+        );
     }
 }
