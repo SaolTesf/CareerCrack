@@ -1,6 +1,7 @@
 package com.careercrack.careercrack.controllers;
 
 import com.careercrack.careercrack.dtos.CreateProblemRequest;
+import com.careercrack.careercrack.dtos.ProblemResponse;
 import com.careercrack.careercrack.dtos.UpdateProblemRequest;
 import com.careercrack.careercrack.models.Problem;
 import com.careercrack.careercrack.services.ProblemService;
@@ -28,7 +29,7 @@ public class ProblemController {
 
     // Source: https://www.geeksforgeeks.org/advance-java/pagination-and-sorting-with-spring-data-jpa/
     @GetMapping
-    public ResponseEntity<Page<Problem>> getAllProblems(
+    public ResponseEntity<Page<ProblemResponse>> getAllProblems(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -39,23 +40,36 @@ public class ProblemController {
         return ResponseEntity.ok(problemService.getAllProblems(pageable));
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Page<ProblemResponse>> getAllProblemsByUserId(
+            @PathVariable @RequestParam(required = true) Long userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending) {
+        Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        log.info("Retrieving {} problems for page {}, sorting by {} and ascending {}, for problem with ID {}", size, page, sortBy, ascending, userId);
+        return ResponseEntity.ok(problemService.getAllProblems(pageable));
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Problem> getProblemById(@PathVariable Long id) {
-        Optional<Problem> problem = problemService.findById(id);
+    public ResponseEntity<ProblemResponse> getProblemById(@PathVariable Long id) {
+        Optional<ProblemResponse> problem = problemService.findById(id);
         log.info("Retrieving problem with id {}", id);
         return problem.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Problem> createProblem(@Valid @RequestBody CreateProblemRequest createProblemRequest) {
-        Problem newProblem = problemService.createProblem(createProblemRequest);
+    public ResponseEntity<ProblemResponse> createProblem(@Valid @RequestBody CreateProblemRequest createProblemRequest) {
+        ProblemResponse newProblem = problemService.createProblem(createProblemRequest);
         log.info("Created problem with id {}", newProblem.getId());
         return new ResponseEntity<>(newProblem, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Problem> updateProblem(@PathVariable Long id, @Valid @RequestBody UpdateProblemRequest updateProblemRequest) {
-        Problem updatedProblem = problemService.updateProblem(id, updateProblemRequest);
+    public ResponseEntity<ProblemResponse> updateProblem(@PathVariable Long id, @Valid @RequestBody UpdateProblemRequest updateProblemRequest) {
+        ProblemResponse updatedProblem = problemService.updateProblem(id, updateProblemRequest);
         log.info("Updated Problem with ID {}", updatedProblem.getId());
         return ResponseEntity.ok(updatedProblem);
     }
