@@ -1,6 +1,6 @@
 package com.careercrack.careercrack.controllers;
 
-import com.careercrack.careercrack.models.Problem;
+import com.careercrack.careercrack.dtos.ProblemResponse;
 import com.careercrack.careercrack.services.ProblemCategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ public class ProblemCategoryController {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<Problem>> getAllProblems(
+    public ResponseEntity<Page<ProblemResponse>> getAllProblems(
             @RequestParam String categoryName,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size,
