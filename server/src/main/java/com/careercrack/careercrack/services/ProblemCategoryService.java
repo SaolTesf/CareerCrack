@@ -2,6 +2,7 @@ package com.careercrack.careercrack.services;
 
 import com.careercrack.careercrack.dtos.ProblemResponse;
 import com.careercrack.careercrack.enums.Category;
+import com.careercrack.careercrack.mappers.ProblemMapper;
 import com.careercrack.careercrack.models.Problem;
 import com.careercrack.careercrack.models.ProblemCategory;
 import com.careercrack.careercrack.repositories.ProblemCategoryRepository;
@@ -14,16 +15,16 @@ import java.util.Optional;
 @Service
 public class ProblemCategoryService {
     private final ProblemCategoryRepository problemCategoryRepository;
-    private final ProblemService problemService;
+    private final ProblemMapper problemMapper;
 
-    public ProblemCategoryService(ProblemCategoryRepository problemCategoryRepository,  ProblemService problemService) {
+    public ProblemCategoryService(ProblemCategoryRepository problemCategoryRepository,  ProblemMapper problemMapper) {
         this.problemCategoryRepository = problemCategoryRepository;
-        this.problemService = problemService;
+        this.problemMapper = problemMapper;
     }
 
     public Page<ProblemResponse> getAllProblems(String name, Pageable pageable) {
         Page<Problem> problems = problemCategoryRepository.findAllProblemsByName(name, pageable);
-        return problems.map(problemService::mapToDto);
+        return problems.map(problemMapper::toDto);
     }
 
     public Optional<ProblemCategory> findById(Long id) {

@@ -5,6 +5,7 @@ import com.careercrack.careercrack.dtos.CreateProblemRequest;
 import com.careercrack.careercrack.dtos.ProblemResponse;
 import com.careercrack.careercrack.dtos.UpdateProblemRequest;
 import com.careercrack.careercrack.enums.Status;
+import com.careercrack.careercrack.mappers.ProblemMapper;
 import com.careercrack.careercrack.models.Tag;
 import com.careercrack.careercrack.repositories.ProblemRepository;
 import com.careercrack.careercrack.models.Problem;
@@ -25,26 +26,28 @@ public class ProblemService {
     private final TagService tagService;
     private final UserService userService;
     private final ProblemCategoryService problemCategoryService;
+    private final ProblemMapper problemMapper;
 
-    public ProblemService(ProblemRepository problemRepository, TagService tagService, UserService userService, ProblemCategoryService problemCategoryService) {
+    public ProblemService(ProblemRepository problemRepository, TagService tagService, UserService userService, ProblemCategoryService problemCategoryService, ProblemMapper problemMapper) {
         this.problemRepository = problemRepository;
         this.tagService = tagService;
         this.userService = userService;
         this.problemCategoryService = problemCategoryService;
+        this.problemMapper = problemMapper;
     }
 
     public Page<ProblemResponse> getAllProblems(Pageable pageable) {
         Page<Problem> problems = problemRepository.findAll(pageable);
-        return problems.map(this::mapToDto);
+        return problems.map(problemMapper::toDto);
     }
 
     public Page<ProblemResponse> getAllProblemsByUserId(Long userId, Pageable pageable) {
         Page<Problem> problems = problemRepository.findAllByUserId(userId, pageable);
-        return problems.map(this::mapToDto);
+        return problems.map(problemMapper::toDto);
     }
 
     public Optional<ProblemResponse> findById(Long id) {
-        return problemRepository.findById(id).map(this::mapToDto);
+        return problemRepository.findById(id).map(problemMapper::toDto);
     }
 
     @Transactional
@@ -74,7 +77,7 @@ public class ProblemService {
             savedProblem = problemRepository.save(savedProblem);
         }
 
-        return mapToDto(savedProblem);
+        return problemMapper.toDto(savedProblem);
     }
 
     @Transactional
@@ -114,7 +117,7 @@ public class ProblemService {
         }
 
         Problem savedProblem = problemRepository.save(existingProblem);
-        return mapToDto(savedProblem);
+        return problemMapper.toDto(savedProblem);
     }
 
     public boolean deleteProblem(Long id) {
@@ -123,22 +126,5 @@ public class ProblemService {
         }
         problemRepository.deleteById(id);
         return true;
-    }
-
-    public ProblemResponse mapToDto(Problem problem) {
-        return new ProblemResponse(
-                problem.getId(),
-                problem.getUser().getId(),
-                problem.getProblemCategory().getName().toString(),
-                problem.getTitle(),
-                problem.getExternalLink(),
-                problem.getDifficulty(),
-                problem.getStatus().toString(),
-                problem.getDescription(),
-                problem.getSolution(),
-                problem.getCreatedAt(),
-                problem.getUpdatedAt(),
-                (problem.getTags() != null ? problem.getTags().stream().map(Tag::getName).toList() : new ArrayList<>())
-        );
     }
 }
