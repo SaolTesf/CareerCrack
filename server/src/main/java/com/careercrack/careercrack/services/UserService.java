@@ -1,5 +1,5 @@
 package com.careercrack.careercrack.services;
-
+// TODO: Replace usage of User entity with new User DTO
 import com.careercrack.careercrack.models.User;
 import com.careercrack.careercrack.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
