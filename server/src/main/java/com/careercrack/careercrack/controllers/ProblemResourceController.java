@@ -1,11 +1,14 @@
 package com.careercrack.careercrack.controllers;
 
-import com.careercrack.careercrack.models.ProblemResource;
+import com.careercrack.careercrack.dtos.CreateProblemResourceRequest;
+import com.careercrack.careercrack.dtos.ProblemResourceResponse;
 import com.careercrack.careercrack.services.ProblemResourceService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,9 +23,9 @@ public class ProblemResourceController {
     }
 
     @PostMapping
-    public ResponseEntity<ProblemResource> createProblemResource(ProblemResource problemResource) {
-        ProblemResource newProblemResource = problemResourceService.createProblemResource(problemResource);
-        log.info("Created problem resource for problem with ID {}", newProblemResource.getProblemId());
-        return new ResponseEntity<>(newProblemResource, HttpStatus.CREATED);
+    public ResponseEntity<ProblemResourceResponse> createProblemResource(@Valid @RequestBody CreateProblemResourceRequest createProblemResourceRequest) {
+        ProblemResourceResponse problemResourceResponse = problemResourceService.createProblemResource(createProblemResourceRequest);
+        log.info("Created problem resource for problem with ID {}", problemResourceResponse.getProblemId());
+        return new ResponseEntity<>(problemResourceResponse, HttpStatus.CREATED);
     }
 }
