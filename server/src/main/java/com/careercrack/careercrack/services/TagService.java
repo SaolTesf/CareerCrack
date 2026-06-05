@@ -1,5 +1,7 @@
 package com.careercrack.careercrack.services;
 
+import com.careercrack.careercrack.dtos.TagResponse;
+import com.careercrack.careercrack.mappers.TagMapper;
 import com.careercrack.careercrack.models.Tag;
 import com.careercrack.careercrack.repositories.TagRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -10,14 +12,16 @@ import java.util.List;
 @Service
 public class TagService {
     private final TagRepository tagRepository;
+    private final TagMapper tagMapper;
 
-    public TagService(TagRepository tagRepository) {
+    public TagService(TagRepository tagRepository, TagMapper tagMapper) {
         this.tagRepository = tagRepository;
+        this.tagMapper = tagMapper;
     }
 
-    // TODO: Implement this
-    public List<Tag> getAllTags() {
-        return tagRepository.findAll();
+    public List<TagResponse> getAllTags() {
+        List<Tag> tags = tagRepository.findAll();
+        return tagMapper.toDto(tags);
     }
 
     public Tag findOrCreate(String name) {
