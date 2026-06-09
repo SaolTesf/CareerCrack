@@ -13,7 +13,7 @@ import java.util.List;
 public interface ProblemMapper {
 
     @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "problemCategory.name", target = "category")
+    @Mapping(source = "problemCategory.name", target = "categoryName")
     ProblemResponse toDto(Problem problem);
 
     default List<String> mapTags(List<Tag> tags) {
