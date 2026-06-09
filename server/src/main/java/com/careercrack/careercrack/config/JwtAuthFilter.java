@@ -1,6 +1,7 @@
 package com.careercrack.careercrack.config;
 
 import com.careercrack.careercrack.services.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -23,7 +26,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) {
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws IOException {
         try {
             // Extract JWT from Authorization header
             String authHeader = request.getHeader("Authorization");
@@ -51,8 +54,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         }
-        catch(Exception e) {
-            logger.error("Cannot set user authentication: {}", e);
+        catch (ExpiredJwtException e) {
+            // Send 401 directly to the client
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("JWT token has expired");
+            response.getWriter().flush();
+        }
+        catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
     }
 }

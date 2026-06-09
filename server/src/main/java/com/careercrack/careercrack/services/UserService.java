@@ -1,11 +1,10 @@
 package com.careercrack.careercrack.services;
-
+// TODO: Replace usage of User entity with new User DTO
 import com.careercrack.careercrack.models.User;
 import com.careercrack.careercrack.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +55,6 @@ public class UserService {
             existingUser.setUsername(user.getUsername());
             existingUser.setEmail(user.getEmail());
             existingUser.setHashedPassword(passwordEncoder.encode(user.getHashedPassword()));
-            existingUser.setUpdatedAt(new Date());
             return userRepository.save(existingUser);
         }
         return null;
