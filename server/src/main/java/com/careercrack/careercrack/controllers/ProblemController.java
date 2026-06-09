@@ -40,19 +40,6 @@ public class ProblemController {
         return ResponseEntity.ok(problemService.getAllProblems(pageable));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<Page<ProblemResponse>> getAllProblemsByUserId(
-            @PathVariable @RequestParam(required = true) Long userId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "true") boolean ascending) {
-        Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(page, size, sort);
-        log.info("Retrieving {} problems for page {}, sorting by {} and ascending {}, for problem with ID {}", size, page, sortBy, ascending, userId);
-        return ResponseEntity.ok(problemService.getAllProblems(pageable));
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<ProblemResponse> getProblemById(@PathVariable Long id) {
         Optional<ProblemResponse> problem = problemService.findById(id);
