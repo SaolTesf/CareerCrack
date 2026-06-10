@@ -51,7 +51,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id, User user) {
+    public UserResponse updateUser(Long id, User user) {
         User existingUser = userRepository.findById(id).orElse(null);
         if (existingUser != null) {
             existingUser.setFirstName(user.getFirstName());
@@ -59,7 +59,7 @@ public class UserService {
             existingUser.setUsername(user.getUsername());
             existingUser.setEmail(user.getEmail());
             existingUser.setHashedPassword(passwordEncoder.encode(user.getHashedPassword()));
-            return userRepository.save(existingUser);
+            return userMapper.toDto(userRepository.save(existingUser));
         }
         return null;
     }
