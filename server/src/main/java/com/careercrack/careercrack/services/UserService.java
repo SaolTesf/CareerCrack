@@ -1,5 +1,7 @@
 package com.careercrack.careercrack.services;
 // TODO: Replace usage of User entity with new User DTO
+import com.careercrack.careercrack.dtos.UserResponse;
+import com.careercrack.careercrack.mappers.UserMapper;
 import com.careercrack.careercrack.models.User;
 import com.careercrack.careercrack.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,26 +14,28 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+        return userMapper.toDto(userRepository.findAll());
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserResponse> findById(Long id) {
+        return userRepository.findById(id).map(userMapper::toDto);
     }
 
-    public User findByUserName(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<UserResponse> findByUserName(String username) {
+        return Optional.ofNullable(userRepository.findByUsername(username)).map(userMapper::toDto);
     }
 
-    public User findByUserNameAndEmail(String username, String email) {
-        return userRepository.findByUsernameAndEmail(username, email);
+    public Optional<UserResponse> findByUserNameAndEmail(String username, String email) {
+        return Optional.ofNullable(userRepository.findByUsernameAndEmail(username, email)).map(userMapper::toDto);
     }
 
     public Boolean existByEmail(String email) {
