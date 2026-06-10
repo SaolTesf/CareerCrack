@@ -9,6 +9,7 @@ import com.careercrack.careercrack.mappers.ProblemMapper;
 import com.careercrack.careercrack.models.Tag;
 import com.careercrack.careercrack.repositories.ProblemRepository;
 import com.careercrack.careercrack.models.Problem;
+import com.careercrack.careercrack.repositories.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,14 @@ import java.util.Set;
 public class ProblemService {
     private final ProblemRepository problemRepository;
     private final TagService tagService;
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final ProblemCategoryService problemCategoryService;
     private final ProblemMapper problemMapper;
 
-    public ProblemService(ProblemRepository problemRepository, TagService tagService, UserService userService, ProblemCategoryService problemCategoryService, ProblemMapper problemMapper) {
+    public ProblemService(ProblemRepository problemRepository, TagService tagService, UserRepository userRepository, ProblemCategoryService problemCategoryService, ProblemMapper problemMapper) {
         this.problemRepository = problemRepository;
         this.tagService = tagService;
-        this.userService = userService;
+        this.userRepository = userRepository;
         this.problemCategoryService = problemCategoryService;
         this.problemMapper = problemMapper;
     }
@@ -54,7 +55,7 @@ public class ProblemService {
     public ProblemResponse createProblem(CreateProblemRequest createProblemRequest) {
         // create and set all attributes of problem
         Problem newProblem = new Problem();
-        newProblem.setUser(userService.findById(createProblemRequest.getUserId()).orElseThrow(() -> new IllegalArgumentException("User not found")));
+        newProblem.setUser(userRepository.findById(createProblemRequest.getUserId()).orElseThrow(() -> new IllegalArgumentException("User not found")));
         newProblem.setProblemCategory(problemCategoryService.findById(createProblemRequest.getCategoryId()).orElseThrow(() -> new IllegalArgumentException("Problem Category not found")));
         newProblem.setTitle(createProblemRequest.getTitle());
         newProblem.setExternalLink(createProblemRequest.getExternalLink());
