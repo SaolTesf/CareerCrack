@@ -2,6 +2,7 @@
 package com.careercrack.careercrack.controllers;
 
 import com.careercrack.careercrack.dtos.ProblemResponse;
+import com.careercrack.careercrack.dtos.UserResponse;
 import com.careercrack.careercrack.models.User;
 import com.careercrack.careercrack.services.ProblemService;
 import com.careercrack.careercrack.services.UserService;
@@ -34,32 +35,32 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
+        List<UserResponse> users = userService.getAllUsers();
         logger.info("Fetched {} users", users.size());
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.findById(id);
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+        Optional<UserResponse> user = userService.findById(id);
         logger.info("Fetching user with ID: {}", id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // ex: /api/users?username=johnDoe
     @GetMapping(params = "username")
-    public ResponseEntity<User> getUserByUserName(@RequestParam("username") String username) {
-        User user = userService.findByUserName(username);
+    public ResponseEntity<UserResponse> getUserByUserName(@RequestParam("username") String username) {
+        Optional<UserResponse> user = userService.findByUserName(username);
         logger.info("Fetching user with username: {}", username);
-        return (user != null) ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{username}/{email}")
-    public ResponseEntity<User> getUserByUserNameAndEmail(@PathVariable String username, @PathVariable String email) {
-        User user = userService.findByUserNameAndEmail(username, email);
+    public ResponseEntity<UserResponse> getUserByUserNameAndEmail(@PathVariable String username, @PathVariable String email) {
+        Optional<UserResponse> user = userService.findByUserNameAndEmail(username, email);
         logger.info("Fetching user with username: {} and email: {}", username, email);
-        return (user != null) ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
+        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/email-check/{email}")
@@ -90,15 +91,15 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User newUser = userService.createUser(user);
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody User user) {
+        UserResponse newUser = userService.createUser(user);
         logger.info("Created new user with ID: {}", newUser.getId());
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
-        User updatedUser = userService.updateUser(id, user);
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
+        UserResponse updatedUser = userService.updateUser(id, user);
         logger.info("Updating user with ID: {}", id);
         return (updatedUser != null) ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
     }
