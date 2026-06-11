@@ -46,9 +46,9 @@ public class UserService {
         return userRepository.existsByUsername(username);
     }
 
-    public User createUser(User user) {
+    public UserResponse createUser(User user) {
         user.setHashedPassword(user.getHashedPassword()); // hashing already happens in register service method
-        return userRepository.save(user);
+        return userMapper.toDto(userRepository.save(user));
     }
 
     public UserResponse updateUser(Long id, User user) {
