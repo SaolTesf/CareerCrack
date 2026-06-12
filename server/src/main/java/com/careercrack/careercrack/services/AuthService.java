@@ -1,10 +1,12 @@
 package com.careercrack.careercrack.services;
 
 import com.careercrack.careercrack.controllers.AuthController;
+import com.careercrack.careercrack.dtos.UserResponse;
 import com.careercrack.careercrack.exceptions.InvalidCredentialsException;
 import com.careercrack.careercrack.models.User;
 import com.careercrack.careercrack.repositories.UserRepository;
 import com.careercrack.careercrack.exceptions.DuplicateResourceException;
+import com.careercrack.careercrack.mappers.UserMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,25 +16,27 @@ public class AuthService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserService userService;
     private final EmailService emailService;
+    private final UserMapper userMapper;
 
-    public AuthService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, UserService userService, EmailService emailService) {
+    public AuthService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, UserService userService, EmailService emailService, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.emailService = emailService;
+        this.userMapper = userMapper;
     }
 
-    public User login(String identifier, String password) {
+    public UserResponse login(String identifier, String password) {
         User user = emailService.isEmail(identifier)
                 ? userRepository.getUserByEmail(identifier)
                 : userRepository.getUserByUsername(identifier);
         if(user == null || !passwordEncoder.matches(password, user.getHashedPassword())) {
             throw new InvalidCredentialsException("Username/Email or password was incorrect");
         }
-        return user;
+        return userMapper.toDto(user);
     }
 
-    public User register(AuthController.RegisterRequest request) {
+    public UserResponse register(AuthController.RegisterRequest request) {
         if(userService.existByEmail(request.getEmail())) {
             throw new DuplicateResourceException("Email is already in use");
         }
