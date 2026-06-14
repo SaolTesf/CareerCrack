@@ -22,10 +22,10 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
     @Nonnull
     Optional<Problem> findById(@Nonnull Long id);
 
-    @EntityGraph(attributePaths = {"user", "problemCategory"})
+    @EntityGraph(attributePaths = {"user", "problemCategory", "tags"})
     @Nonnull
     Page<Problem> findAll(@Nonnull Pageable pageable);
 
-    @EntityGraph(attributePaths = {"user", "problemCategory"})
+    @EntityGraph(attributePaths = {"user", "problemCategory", "tags"})
     Page<Problem> findAllByUserId(Long userId, Pageable pageable);
 }
