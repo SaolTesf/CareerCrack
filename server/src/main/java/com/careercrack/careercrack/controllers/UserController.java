@@ -6,8 +6,7 @@ import com.careercrack.careercrack.dtos.UserResponse;
 import com.careercrack.careercrack.models.User;
 import com.careercrack.careercrack.services.ProblemService;
 import com.careercrack.careercrack.services.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,15 +19,13 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
     private final ProblemService problemService;
-
-    // TODO: Use SLF4J instead of this
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
+    
     public UserController(UserService userService, ProblemService problemService) {
         this.userService = userService;
         this.problemService = problemService;
@@ -37,14 +34,14 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         List<UserResponse> users = userService.getAllUsers();
-        logger.info("Fetched {} users", users.size());
+        log.info("Fetched {} users", users.size());
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
         Optional<UserResponse> user = userService.findById(id);
-        logger.info("Fetching user with ID: {}", id);
+        log.info("Fetching user with ID: {}", id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -52,28 +49,28 @@ public class UserController {
     @GetMapping(params = "username")
     public ResponseEntity<UserResponse> getUserByUserName(@RequestParam("username") String username) {
         Optional<UserResponse> user = userService.findByUserName(username);
-        logger.info("Fetching user with username: {}", username);
+        log.info("Fetching user with username: {}", username);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{username}/{email}")
     public ResponseEntity<UserResponse> getUserByUserNameAndEmail(@PathVariable String username, @PathVariable String email) {
         Optional<UserResponse> user = userService.findByUserNameAndEmail(username, email);
-        logger.info("Fetching user with username: {} and email: {}", username, email);
+        log.info("Fetching user with username: {} and email: {}", username, email);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/email-check/{email}")
     public ResponseEntity<Boolean> existsByEmail(@PathVariable String email) {
         Boolean exists = userService.existByEmail(email);
-        logger.info("Email existence check for {}: {}", email, exists);
+        log.info("Email existence check for {}: {}", email, exists);
         return ResponseEntity.ok(exists);
     }
 
     @GetMapping("/username-check/{username}")
     public ResponseEntity<Boolean> existByUsername(@PathVariable String username) {
         Boolean exist = userService.existByUsername(username);
-        logger.info("Username existence check for {}: {}", username, exist);
+        log.info("Username existence check for {}: {}", username, exist);
         return ResponseEntity.ok(exist);
     }
 
@@ -86,21 +83,21 @@ public class UserController {
             @RequestParam(defaultValue = "true") boolean ascending) {
         Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        logger.info("Retrieving {} problems for page {}, sorting by {} and ascending {}, for problem with ID {}", size, page, sortBy, ascending, userId);
+        log.info("Retrieving {} problems for page {}, sorting by {} and ascending {}, for problem with ID {}", size, page, sortBy, ascending, userId);
         return ResponseEntity.ok(problemService.getAllProblemsByUserId(userId, pageable));
     }
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody User user) {
         UserResponse newUser = userService.createUser(user);
-        logger.info("Created new user with ID: {}", newUser.getId());
+        log.info("Created new user with ID: {}", newUser.getId());
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
         UserResponse updatedUser = userService.updateUser(id, user);
-        logger.info("Updating user with ID: {}", id);
+        log.info("Updating user with ID: {}", id);
         return (updatedUser != null) ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
     }
 
@@ -110,7 +107,7 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         userService.deleteUser(id);
-        logger.info("Deleted user with ID: {}", id);
+        log.info("Deleted user with ID: {}", id);
         return ResponseEntity.ok().build();
     }
 }

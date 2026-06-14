@@ -4,11 +4,15 @@ package com.careercrack.careercrack.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class ProblemTagId implements Serializable { // will be serialized and sent across the network
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "problem_id", updatable = false)
     private Long problemId;
 

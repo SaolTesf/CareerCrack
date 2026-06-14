@@ -3,7 +3,6 @@ package com.careercrack.careercrack.controllers;
 import com.careercrack.careercrack.dtos.CreateProblemRequest;
 import com.careercrack.careercrack.dtos.ProblemResponse;
 import com.careercrack.careercrack.dtos.UpdateProblemRequest;
-import com.careercrack.careercrack.models.Problem;
 import com.careercrack.careercrack.services.ProblemService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
