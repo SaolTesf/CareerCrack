@@ -1,3 +1,5 @@
+CREATE ROLE "career_user";
+
 -- database definition
 -- update "career_user" to a user you have created
 create database careercrack
@@ -21,6 +23,10 @@ CREATE TABLE careercrack.users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO careercrack.users(first_name, last_name, username, email, hashed_password) VALUES
+    ('John', 'Doe', 'JohnDoe', 'johndoe@email.com', 'someHashedPassword'),
+    ('Jane', 'Smith', 'jsmith99', 'jane.smith@example.net', 'someHashedPassword');
 
 -- problems section
 CREATE TABLE careercrack.problem_categories (
@@ -95,10 +101,10 @@ CREATE TABLE careercrack.problem_resources (
 
 -- Sample data for problem_resources
 INSERT INTO careercrack.problem_resources (problem_id, resource_type, url, description) VALUES
-    (1, 'video', 'https://youtube.com/example1', 'NeetCode solution explanation'),
-    (1, 'article', 'https://medium.com/example1', 'Alternative approach'),
-    (4, 'video', 'https://youtube.com/example2', 'System design walkthrough'),
-    (5, 'article', 'https://leetcode.com/discuss/example', 'Official solution');
+    ((SELECT MIN(id) FROM careercrack.problems), 'video', 'https://youtube.com/example1', 'NeetCode solution explanation'),
+    ((SELECT MIN(id) FROM careercrack.problems), 'article', 'https://medium.com/example1', 'Alternative approach'),
+    ((SELECT MAX(id) FROM careercrack.problems), 'video', 'https://youtube.com/example2', 'System design walkthrough'),
+    ((SELECT MAX(id) FROM careercrack.problems), 'article', 'https://leetcode.com/discuss/example', 'Official solution');
 
 
 CREATE TABLE careercrack.tags (
@@ -141,12 +147,3 @@ CREATE TABLE careercrack.problem_tags (
         REFERENCES tags(id)
         ON DELETE CASCADE
 );
-
-
--- Sample data for problem_tags (linking problems with tags)
-INSERT INTO careercrack.problem_tags (problem_id, tag_id) VALUES
-    (1, 1),  -- Two Sum: Array
-    (1, 3),  -- Two Sum: Hash Table
-    (2, 15), -- Merge Lists: Linked List
-    (3, 2),  -- Tell me about yourself: String (behavioral tag could be added)
-    (5, 13); -- Valid Parentheses: Stack
