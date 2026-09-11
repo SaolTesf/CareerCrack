@@ -1,13 +1,26 @@
-CREATE ROLE "career_user";
+CREATE USER "career_user" WITH PASSWORD 'password123';
 
 -- database definition
 -- update "career_user" to a user you have created
 create database careercrack
     with owner career_user;
 
-CREATE SCHEMA IF NOT EXISTS careercrack AUTHORIZATION career_user;
+GRANT CONNECT, TEMPORARY ON DATABASE careercrack TO "career_user";
+GRANT ALL PRIVILEGES ON DATABASE careercrack TO "career_user";
 
+------------------------------------------------------------------------------------------------------------------------
+
+
+-- ** MAKE SURE TO SWITCH THE DATABASE TO CAREERCRACK BEFORE RUNNING ANYTHING BELOW **
+
+CREATE SCHEMA IF NOT EXISTS careercrack AUTHORIZATION career_user;
 SET search_path TO careercrack;
+
+ALTER USER "career_user" SET search_path TO careercrack;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA careercrack GRANT ALL PRIVILEGES ON TABLES TO "career_user";
+
+SET ROLE career_user;
 
 -- users table
 CREATE TABLE careercrack.users (
