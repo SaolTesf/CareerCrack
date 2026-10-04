@@ -60,10 +60,10 @@ export const LoginSignup = () => {
       
       <div className='auth-switch'>
         {action === "Login" ? (
-          <div>Don't have an account? <span onClick={() => switchAction("Sign Up")} disabled={loading}>Sign Up</span></div>
+          <div>Don't have an account? <span onClick={() => switchAction("Sign Up")} style={{ opacity: loading ? 0.5 : 1, pointerEvents: loading ? 'none' : 'auto' }}>Sign Up</span></div>
         )
         : ( 
-        <div>Have an account? <span onClick={() => switchAction("Login")} disabled={loading}>Login</span></div>
+        <div>Have an account? <span onClick={() => switchAction("Login")} style={{ opacity: loading ? 0.5 : 1, pointerEvents: loading ? 'none' : 'auto' }}>Login</span></div>
         )}
 
       </div>
