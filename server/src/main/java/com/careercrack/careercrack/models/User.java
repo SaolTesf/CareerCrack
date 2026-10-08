@@ -26,26 +26,27 @@ public class User {
     private Long id;
 
     @Column(name = "first_name")
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "First name is required")
+    @Size(min = 1, max = 50, message = "First name must be between 1 and 50 characters")
     private String firstName;
 
     @Column(name = "last_name")
-    @NotNull
-    @Size(min = 1, max = 50)
+    @NotNull(message = "Last name is required")
+    @Size(min = 1, max = 50, message = "Last name must be between 1 and 50 characters")
     private String lastName;
 
     @Column(name = "username")
-    @NotNull
-    @Size(min = 3, max = 50)
+    @NotNull(message = "Username is required")
+    @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
     private String username;
 
     @Column(name = "email")
-    @Email
+    @NotNull(message = "Email is required")
+    @Email(message = "Please provide a valid email address")
     private String email;
 
     @Column(name = "hashed_password")
-    @NotNull
+    @NotNull(message = "Password is required")
     private String hashedPassword;
 
     @Column(name = "created_at")
