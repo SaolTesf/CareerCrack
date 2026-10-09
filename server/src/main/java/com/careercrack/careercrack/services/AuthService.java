@@ -37,10 +37,10 @@ public class AuthService {
     }
 
     public UserResponse register(AuthController.RegisterRequest request) {
-        if(userService.existByEmail(request.getEmail())) {
+        if (userService.existByEmail(request.getEmail())) {
             throw new DuplicateResourceException("Email is already in use");
         }
-        if(userService.existByUsername(request.getUsername())) {
+        if (userService.existByUsername(request.getUsername())) {
             throw new DuplicateResourceException("Username is already taken");
         }
 
