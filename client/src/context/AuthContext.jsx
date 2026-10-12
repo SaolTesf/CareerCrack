@@ -6,7 +6,8 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [formError, setFormError] = useState(null);
 
   // Initialize on mount to ensure all variables are available in the DOM
   useEffect(() => {
@@ -33,13 +34,15 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
     try {
       setLoading(true);
-      setError(null);
+      setFormError(null);
+      setFieldErrors(null);
       const data = await authService.login(credentials);
       setUser(data.user);
       return data;
     }
     catch (error) {
-      setError(error.message);
+      setFormError(error.message);
+      setFieldErrors(error.fieldErrors);
       throw error;
     }
     finally {
@@ -50,13 +53,15 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try{
       setLoading(true);
-      setError(null);
+      setFormError(null);
+      setFieldErrors(null);
       const data = await authService.register(userData);
       setUser(data.user);
       return data
     }
     catch (error) {
-      setError(error.message);
+      setFormError(error.message);
+      setFieldErrors(error.fieldErrors);
       throw error;
     }
     finally {
@@ -72,21 +77,22 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     loading,
-    error,
+    formError,
+    fieldErrors,
     login,
     register,
     logout,
-    clearError: () => setError(null),
+    clearError: () => { setFormError(null); setFieldErrors(null); },
     isAuthenticated: !!user,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-  export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-      throw new Error('useAuth must be used within AuthProvider');
-    }
-    return context;
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider');
   }
+  return context;
+}
