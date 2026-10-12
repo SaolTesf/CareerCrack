@@ -7,7 +7,7 @@ import { useAuth } from '../../context/AuthContext';
 
 export const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
-  const { login, register, loading, error, clearError, isAuthenticated } = useAuth();
+  const { login, register, loading, formError, fieldErrors, clearError, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   // will navigate automatically when the user is authenticated
@@ -50,12 +50,12 @@ export const LoginSignup = () => {
         <div className="underline" />
       </div>
       
-      {error && <div className='error-message'>{error}</div>}
+      {formError && <div className='error-message'>{formError}</div>}
 
       {action === "Login" ? (
-        <Login onSubmit={handleLogin} loading={loading} />
+        <Login onSubmit={handleLogin} loading={loading} fieldErrors={fieldErrors} />
         ) : (
-        <SignUp onSubmit={handleRegister} loading={loading} />
+        <SignUp onSubmit={handleRegister} loading={loading} fieldErrors={fieldErrors} />
       )}
       
       <div className='auth-switch'>

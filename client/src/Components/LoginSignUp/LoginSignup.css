@@ -15,7 +15,7 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  margin-top: 0; /* let space-evenly handle this now */
+  margin-top: 0;
 }
 
 .text {
@@ -31,23 +31,29 @@
   border-radius: 10px;
 }
 
+/* restored: spacing between fields + centering */
 .form {
   margin-top: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
+  text-align: center;
 }
 
 .input {
+  position: relative;
   display: flex;
   align-items: center;
-  margin: auto;
+  margin: 0 auto;
   width: 480px;
-  height: 60px; /* was 80px */
+  height: 60px;
   background: rgb(240, 239, 239);
   border-radius: 10px;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  transition: background 0.15s, border-color 0.15s;
 }
-
 
 .input svg {
   margin: 0px 30px;
@@ -61,6 +67,57 @@
   outline: none;
   color: gray;
   font-size: 20px;
+}
+
+/* red highlight */
+.input.has-error {
+  background: #fdecec;
+  border-color: #ad1a1a;
+}
+
+.input.has-error svg,
+.input.has-error input {
+  color: #ad1a1a;
+}
+
+.input.has-error input::placeholder {
+  color: rgba(173, 26, 26, 0.6);
+}
+
+/* error tooltip: hidden until hover (or keyboard focus) */
+.field-error {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #ad1a1a;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+.field-error::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #ad1a1a;
+}
+
+.input.has-error:hover .field-error,
+.input.has-error:focus-within .field-error {
+  opacity: 1;
+  visibility: visible;
 }
 
 .forgot-password {
@@ -90,6 +147,7 @@
 
 .submit-container {
   display: flex;
+  justify-content: center;
   gap: 30px;
   margin: 0 auto;
 }
