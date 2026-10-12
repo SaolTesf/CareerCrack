@@ -30,21 +30,18 @@ export const apiClient = {
     if (token && !skipAuth) {
       config.headers['Authorization'] = 'Bearer ' + token;
     }
-    try {
-      const response = await fetch(API_BASE_URL + endpoint, config);
-      const data = await response.json()
 
-      if (!response.ok) {
-        //resetSession();
-        throw new Error(data.error || 'Something went wrong');
-      }
+    const response = await fetch(API_BASE_URL + endpoint, config);
+    const data = await response.json().catch(() => null);
 
-      return data;
-    }
-    catch (error) {
-      //resetSession();
+    if (!response.ok) {
+      const error = new Error(data?.message || 'Something went wrong');
+      error.status = response.status;
+      error.fieldErrors = data?.fieldErrors || null;
       throw error;
     }
+
+    return data;
 
   },
 
