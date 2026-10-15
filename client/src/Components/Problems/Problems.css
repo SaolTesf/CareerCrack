@@ -1,0 +1,38 @@
+.problems-table { 
+  width: 100%; border-collapse: collapse; 
+}
+.problems-table th, .problems-table td { 
+  padding: 12px 16px; text-align: left; 
+}
+.problems-table th.sortable { 
+  cursor: pointer; user-select: none; 
+}
+.problems-table tbody tr:nth-child(even) { 
+  background: rgb(240, 239, 239); 
+}
+
+.tag-list { 
+  display: flex; flex-wrap: wrap; gap: 6px; 
+}
+.tag { 
+  padding: 2px 10px; border-radius: 999px; background: #dbe6f1; font-size: 13px; 
+}
+
+.badge { 
+  padding: 2px 10px; border-radius: 6px; font-size: 13px; font-weight: 600; 
+}
+.difficulty-easy { 
+  background: #d9f2e0; 
+}  
+.difficulty-medium { 
+  background: #fdf0c8; 
+}
+.difficulty-hard { 
+  background: #fbd9d9; 
+}
+.status-mastered { 
+  background: #d9f2e0; 
+}  
+.status-solved { 
+  background: #dbe6f1; 
+}
