@@ -7,6 +7,7 @@ import { LoginSignup } from './Components/LoginSignUp/LoginSignup';
 import { Home } from './Components/Home/Home';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './Components/Navbar/Navbar';
+import Problems from './Components/Problems/Problems';
 
 function AppRouter() {
   const location = useLocation();
@@ -39,7 +40,7 @@ function AppRouter() {
             path='/problems'
             element={
               <ProtectedRoute>
-                <div>Put Problem Component Here</div>
+                <Problems />
               </ProtectedRoute>
             }
           />
