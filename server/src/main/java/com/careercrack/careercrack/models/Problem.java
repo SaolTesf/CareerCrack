@@ -51,8 +51,7 @@ public class Problem {
     private String difficulty;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    @Size(min = 4, max = 20)
+    @Column(name = "status", length = 20)
     private Status status;
 
     @Column(name = "description")
