@@ -4,3 +4,4 @@
 *.iml
 *.ipr
 .vscode
+**/.DS_Store
