@@ -5,6 +5,7 @@ import com.careercrack.careercrack.dtos.CreateProblemRequest;
 import com.careercrack.careercrack.dtos.ProblemResponse;
 import com.careercrack.careercrack.dtos.UpdateProblemRequest;
 import com.careercrack.careercrack.enums.Status;
+import com.careercrack.careercrack.exceptions.ResourceNotFoundException;
 import com.careercrack.careercrack.mappers.ProblemMapper;
 import com.careercrack.careercrack.models.Tag;
 import com.careercrack.careercrack.repositories.ProblemRepository;
@@ -127,5 +128,17 @@ public class ProblemService {
         }
         problemRepository.deleteById(id);
         return true;
+    }
+
+    @Transactional
+    public ProblemResponse deleteProblemTag(Long problemId, String tagName) {
+        Problem problem = problemRepository.findById(problemId)
+                .orElseThrow(() -> new ResourceNotFoundException("Problem Not Found"));
+        boolean removed = problem.getTags().removeIf(t -> t.getName().equalsIgnoreCase(tagName));
+        if (!removed) {
+            throw new ResourceNotFoundException("Problem does not have the tag '" + tagName + "'");
+        }
+
+        return problemMapper.toDto(problem);
     }
 }

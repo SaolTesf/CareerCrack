@@ -72,4 +72,10 @@ public class ProblemController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @DeleteMapping("/{problemId}/tags")
+    public ResponseEntity<ProblemResponse> deleteProblemTag(@PathVariable Long problemId, @RequestParam String name) {
+        log.info("Removing tag '{}' from problem {}", name, problemId);
+        return ResponseEntity.ok(problemService.deleteProblemTag(problemId, name));
+    }
 }
