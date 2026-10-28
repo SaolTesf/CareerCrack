@@ -100,6 +100,20 @@ const Problems = () => {
     }
   };
 
+  const deleteProblemTag = async (problemId, tagName) => {
+    const before = problems.find((p) => p.id === problemId);
+    if (!before) return;
+    setProblems((prev) => prev.map((p) =>
+      p.id === problemId ? { ...p, tags: (p.tags ?? []).filter((t) => t !== tagName) } : p));
+    try {
+      const saved = await problemService.deleteProblemTag(problemId, tagName);
+      setProblems((prev) => prev.map((p) => (p.id === problemId ? saved : p)));
+    } catch (e) {
+      setProblems((prev) => prev.map((p) => (p.id === problemId ? before : p)));
+      notify(errorText(e));
+    }
+  };
+
   return (
     <div className="pr-page">
       <header className="pr-header">
@@ -115,6 +129,7 @@ const Problems = () => {
         onAdd={addProblem}
         onUpdate={updateProblem}
         onDelete={deleteProblem}
+        onDeleteProblemTag={deleteProblemTag}
       />
 
       <datalist id="pr-tag-options">
