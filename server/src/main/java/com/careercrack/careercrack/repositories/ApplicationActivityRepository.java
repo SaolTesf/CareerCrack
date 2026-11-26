@@ -8,7 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-/** Activities have no user column, so ownership is checked through the application they belong to. */
+/**
+ * Activities have no user column, so ownership is checked through the application they belong to.
+ * Every activity response shows its linked event's title, so the event comes back in the same query.
+ */
 public interface ApplicationActivityRepository extends JpaRepository<ApplicationActivity, Long> {
 
     @EntityGraph(attributePaths = "event")

@@ -2,6 +2,7 @@ package com.careercrack.careercrack.repositories;
 
 import com.careercrack.careercrack.models.ApplicationEvent;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,17 +12,24 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
-/** Events have no user column, so ownership is checked through the application they belong to. */
+/**
+ * Events have no user column, so ownership is checked through the application they belong to.
+ * Every event response shows its application's role title and company name, so those come back in the same query.
+ */
 public interface ApplicationEventRepository extends JpaRepository<ApplicationEvent, Long> {
 
+    @EntityGraph(attributePaths = {"application", "application.company"})
     Optional<ApplicationEvent> findByIdAndApplication_User_Id(Long id, Long userId);
 
     // for routes like /applications/{applicationId}/events/{id}
+    @EntityGraph(attributePaths = {"application", "application.company"})
     Optional<ApplicationEvent> findByIdAndApplication_IdAndApplication_User_Id(Long id, Long applicationId, Long userId);
 
     @Query("""
             select e from ApplicationEvent e
-            where e.application.id = :applicationId and e.application.user.id = :userId
+            join fetch e.application a
+            join fetch a.company
+            where a.id = :applicationId and a.user.id = :userId
             order by e.eventAt
             """)
     List<ApplicationEvent> findAllForApplication(@Param("applicationId") Long applicationId, @Param("userId") Long userId);
@@ -61,21 +69,31 @@ public interface ApplicationEventRepository extends JpaRepository<ApplicationEve
 
     // ---- reminder job (looks at every user, so it takes no user id) ----
 
-    // Reminders that are due and not sent yet. Pass a PageRequest to work through them in batches.
+    // Reminders that are due and not sent yet: the reminder time has passed, but not before `earliest`
+    // (a reminder that is many hours late is no longer useful, so it is left alone). Pass a PageRequest to work in batches.
     @Query("""
             select e from ApplicationEvent e
             join fetch e.application a
             join fetch a.user
             join fetch a.company
-            where e.remindAt is not null and e.remindAt <= :now
+            where e.remindAt is not null and e.remindAt <= :now and e.remindAt >= :earliest
               and e.reminderSentAt is null and e.completed = false
             order by e.remindAt
             """)
-    List<ApplicationEvent> findDueReminders(@Param("now") Instant now, Pageable pageable);
+    List<ApplicationEvent> findDueReminders(@Param("now") Instant now, @Param("earliest") Instant earliest, Pageable pageable);
 
-    // Claims a reminder before sending it. Returns 1 if this caller got it and 0 if another instance already did,
-    // so two running copies of the app never send the same reminder twice.
+    // Claims a reminder before it is sent. Returns 1 if this caller got it, and 0 if another copy of the app already did,
+    // or the event was ticked off, or its reminder time changed since it was loaded. So a reminder is never sent twice.
     @Modifying
-    @Query("update ApplicationEvent e set e.reminderSentAt = :sentAt where e.id = :id and e.reminderSentAt is null")
-    int markReminderSent(@Param("id") Long id, @Param("sentAt") Instant sentAt);
+    @Query("""
+            update ApplicationEvent e set e.reminderSentAt = :claimedAt
+            where e.id = :id and e.reminderSentAt is null and e.completed = false and e.remindAt = :remindAt
+            """)
+    int claimReminder(@Param("id") Long id, @Param("remindAt") Instant remindAt, @Param("claimedAt") Instant claimedAt);
+
+    // Gives a claim back after the send failed, so the next run tries again. It only releases the claim made at
+    // claimedAt, so it cannot undo a newer claim made after the event was rescheduled.
+    @Modifying
+    @Query("update ApplicationEvent e set e.reminderSentAt = null where e.id = :id and e.reminderSentAt = :claimedAt")
+    int releaseReminder(@Param("id") Long id, @Param("claimedAt") Instant claimedAt);
 }
