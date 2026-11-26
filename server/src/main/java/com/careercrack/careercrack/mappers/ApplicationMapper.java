@@ -15,7 +15,7 @@ import org.mapstruct.MappingTarget;
 import java.util.Comparator;
 import java.util.Locale;
 
-@Mapper(config = CentralMapperConfig.class, uses = {CompanyMapper.class, ContactMapper.class, StatusHistoryMapper.class})
+@Mapper(config = CentralMapperConfig.class, uses = {CompanyMapper.class, ContactMapper.class, StatusHistoryMapper.class, EventMapper.class})
 public interface ApplicationMapper {
 
     // list rows and Kanban cards
@@ -27,8 +27,7 @@ public interface ApplicationMapper {
     @Mapping(target = "companyId", source = "company.id")
     @Mapping(target = "companyName", source = "company.name")
     @Mapping(target = "importJobId", source = "importJob.id")
-    // events and documents are filled in by later phases (events, then documents); until then they stay empty
-    @Mapping(target = "events", ignore = true)
+    // documents are filled in by the documents phase; until then they stay empty
     @Mapping(target = "documents", ignore = true)
     ApplicationResponse toDetail(JobApplication application);
 
